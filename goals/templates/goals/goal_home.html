@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}My Goals - FitJacket{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4">🎯 My Fitness Goals</h2>
+
+    {% if goals %}
+        <div class="row">
+            {% for goal in goals %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ goal.get_goal_type_display }}</h5>
+                            <p class="card-text">{{ goal.description }}</p>
+                            <p><strong>Target:</strong> {{ goal.target_metric }}</p>
+                            <p><strong>Target Date:</strong> {{ goal.target_date|date:"F j, Y" }}</p>
+                            <p class="text-muted small">Created on {{ goal.created_at|date:"F j, Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            You haven't added any goals yet. Let's get started on your fitness journey!
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

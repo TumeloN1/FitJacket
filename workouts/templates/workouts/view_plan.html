@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Your Workout Plan</h2>
+
+  {% if plan %}
+    <div class="card p-4">
+      <h4>{{ plan.name }}</h4>
+      <p><strong>Goal:</strong> {{ plan.goal }}</p>
+      <p><strong>Generated on:</strong> {{ plan.created_at|date:"F j, Y" }}</p>
+      <hr>
+      <pre style="white-space: pre-wrap;">{{ plan.content }}</pre>
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">
+      No workout plan available yet.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

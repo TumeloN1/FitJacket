@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Available Exercises</h1>
+    <ul>
+        {% for exercise in exercises %}
+            <li>
+                <strong>{{ exercise.name|title }}</strong><br>
+                <img src="{{ exercise.gifUrl }}" width="200" alt="{{ exercise.name }}"><br>
+                Body Part: {{ exercise.bodyPart }} | Equipment: {{ exercise.equipment }}
+            </li>
+        {% endfor %}
+    </ul>
+  {% endblock %}
