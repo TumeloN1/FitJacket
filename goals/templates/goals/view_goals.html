@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 fade-in">
+    <h2 class="mb-4 text-center">My Fitness Goals</h2>
+    {% if goals %}
+        <div class="row">
+            {% for goal in goals %}
+            <div class="col-md-6 mb-4">
+                <div class="card p-3 scale-hover">
+                    <h5>{{ goal.get_goal_type_display }}</h5>
+                    <p><strong>Description:</strong> {{ goal.description }}</p>
+                    <p><strong>Target:</strong> {{ goal.target_metric }}</p>
+                    <p><strong>Target Date:</strong> {{ goal.target_date }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            You haven't set any goals yet.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

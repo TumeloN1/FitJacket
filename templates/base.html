@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <title>{% block title %}FitJacket{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap & Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg p-3">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'homepage' %}">
+            <img src="{% static 'img/logo.png' %}" alt="logo" height="50" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li> <!-- Make if needed -->
+                <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li> <!-- Hook up later -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'goals:goal_home' %}">My Goals</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'workouts:exercise_list' %}">Workout Log</a></li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:accounts.logout' %}">Logout ({{ user.username }})</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:accounts.login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:accounts.signup' %}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+
+            <form method="get" action="#" class="d-flex mt-2 mt-lg-0"> <!-- Replace # with a real search route -->
+                <input class="form-control me-2" type="text" name="query" placeholder="Search workouts..." aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="content-wrapper p-4">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Footer -->
+<section class="p-3 bg-dark text-white">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-6 col-lg-6 mb-4">
+                <h5><b>FITJACKET</b></h5>
+                <hr />
+                <p>Your fitness companion. Generate plans, track progress, and connect with your fitness community.</p>
+            </div>
+            <div class="col-md-3 col-lg-3 mb-4">
+                <h5><b>LINKS</b></h5>
+                <hr />
+                <p><a class="text-white" href="{% url 'homepage' %}">Home</a></p>
+                <p><a class="text-white" href="#">Dashboard</a></p>
+                <p><a class="text-white" href="{% url 'goals:goal_home' %}">My Goals</a></p>
+                <p><a class="text-white" href="{% url 'workouts:exercise_list' %}">Workout Log</a></p>
+                <p><a class="text-white" href="{% url 'accounts:accounts.login' %}">Login</a></p>
+                <p><a class="text-white" href="{% url 'accounts:accounts.signup' %}">Sign Up</a></p>
+            </div>
+            <div class="col-md-3 col-lg-3 mb-4">
+                <h5><b>CONTACT</b></h5>
+                <hr />
+                <p><i class="fas fa-home me-2"></i> Georgia Institute of Technology</p>
+                <p><i class="fas fa-envelope me-2"></i> georgepburdell3@gatech.edu</p>
+                <p><i class="fas fa-phone me-2"></i> 111-222-3334</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="p-3 bg-secondary text-white text-center">
+    <div class="container">
+        <span>DESIGNED BY
+            <a href="https://github.com/jlouisugbo/" class="text-white" target="_blank">Joel Louis-Ugbo</a>,
+            <a href="https://github.com/elliet28/" class="text-white" target="_blank">Ellie Tavani</a>,
+            <a href="https://github.com/TumeloN1/" class="text-white" target="_blank">Tumelo Ngono</a>,
+            <a href="https://github.com/vivvzhou/" class="text-white" target="_blank">Vivian Zhou</a>,
+            <a href="https://github.com/salammurillo/" class="text-white" target="_blank">Sayhan Alam-Murillo</a>
+        </span>
+        <br>
+        <span>© 2025 FitJacket</span>
+    </div>
+</section>
+</body>
+</html>

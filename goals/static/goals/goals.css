@@ -1,0 +1,19 @@
+.goal-card {
+    background-color: #141a33;
+    border: 1px solid #1a2a6c;
+    color: #e6e6e6;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.goal-card:hover {
+    transform: scale(1.03);
+    border-color: #00ffe5;
+}
+
+.goal-title {
+    color: #00ffe5;
+    font-weight: 600;
+    font-size: 1.2rem;
+}

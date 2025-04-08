@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 fade-in" style="max-width: 600px;">
+    <h2 class="text-center mb-4">Set a New Fitness Goal</h2>
+    <form method="POST" class="card p-4 scale-hover">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn mt-3">Save Goal</button>
+    </form>
+</div>
+{% endblock %}
