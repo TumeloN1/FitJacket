@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center">Exercise Browser</h2>
+  <hr/>
+
+  <!-- Nav Tabs -->
+  <ul class="nav nav-tabs mb-4" id="exerciseTabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All Exercises</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="bodypart-tab" data-toggle="tab" href="#bodypart" role="tab" aria-controls="bodypart" aria-selected="false">By Body Part</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="equipment-tab" data-toggle="tab" href="#equipment" role="tab" aria-controls="equipment" aria-selected="false">By Equipment</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="target-tab" data-toggle="tab" href="#target" role="tab" aria-controls="target" aria-selected="false">By Target</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="name-tab" data-toggle="tab" href="#nameSearch" role="tab" aria-controls="nameSearch" aria-selected="false">Search by Name</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="exerciseTabContent">
+    
+    <!-- ALL EXERCISES -->
+    <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+      <button class="btn btn-primary mb-3" id="fetchAllBtn">Fetch All Exercises</button>
+      <div class="row" id="allExercisesContainer"></div>
+    </div>
+    
+    <!-- BY BODY PART -->
+    <div class="tab-pane fade" id="bodypart" role="tabpanel" aria-labelledby="bodypart-tab">
+      <button class="btn btn-info mb-3" id="fetchBodyPartsBtn">Load Body Parts</button>
+      <select id="bodyPartSelect" class="form-control mb-3" style="max-width:300px;">
+        <option value="">Select a body part...</option>
+      </select>
+      <div class="row" id="bodyPartExercisesContainer"></div>
+    </div>
+    
+    <!-- BY EQUIPMENT -->
+    <div class="tab-pane fade" id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
+      <button class="btn btn-info mb-3" id="fetchEquipmentBtn">Load Equipment</button>
+      <select id="equipmentSelect" class="form-control mb-3" style="max-width:300px;">
+        <option value="">Select equipment...</option>
+      </select>
+      <div class="row" id="equipmentExercisesContainer"></div>
+    </div>
+    
+    <!-- BY TARGET MUSCLE -->
+    <div class="tab-pane fade" id="target" role="tabpanel" aria-labelledby="target-tab">
+      <button class="btn btn-info mb-3" id="fetchTargetBtn">Load Target Muscles</button>
+      <select id="targetSelect" class="form-control mb-3" style="max-width:300px;">
+        <option value="">Select a target...</option>
+      </select>
+      <div class="row" id="targetExercisesContainer"></div>
+    </div>
+    
+    <!-- SEARCH BY NAME -->
+    <div class="tab-pane fade" id="nameSearch" role="tabpanel" aria-labelledby="name-tab">
+      <div class="input-group mb-3" style="max-width:500px;">
+        <input type="text" class="form-control" placeholder="Enter exercise name..." id="exerciseNameInput">
+        <div class="input-group-append">
+          <button class="btn btn-success" id="searchByNameBtn">Search</button>
+        </div>
+      </div>
+      <div class="row" id="nameExercisesContainer"></div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  function createExerciseCard(exercise) {
+    const col = document.createElement('div');
+    col.classList.add('col-md-4', 'mb-3');
+    col.innerHTML = `
+      <div class="card h-100">
+        <img src="${exercise.gifUrl}" class="card-img-top" alt="${exercise.name}">
+        <div class="card-body">
+          <h5 class="card-title">${exercise.name}</h5>
+          <p class="card-text">
+            <strong>Body Part:</strong> ${exercise.bodyPart}<br>
+            <strong>Target:</strong> ${exercise.target}<br>
+            <strong>Equipment:</strong> ${exercise.equipment}
+          </p>
+        </div>
+      </div>
+    `;
+    return col;
+  }
+
+  document.getElementById('fetchAllBtn').addEventListener('click', () => {
+    fetch("{% url 'workouts:api_exercises_list' %}")
+      .then(resp => resp.json())
+      .then(data => {
+        const container = document.getElementById('allExercisesContainer');
+        container.innerHTML = "";
+        if (Array.isArray(data)) {
+          data.forEach(ex => {
+            container.appendChild(createExerciseCard(ex));
+          });
+        } else {
+          container.innerHTML = "<p class='text-danger'>Error loading exercises.</p>";
+        }
+      })
+      .catch(() => {
+        document.getElementById('allExercisesContainer').innerHTML = "<p class='text-danger'>Error fetching data.</p>";
+      });
+  });
+
+  document.getElementById('fetchBodyPartsBtn').addEventListener('click', () => {
+    fetch("{% url 'workouts:api_bodypart_list' %}")
+      .then(resp => resp.json())
+      .then(data => {
+        const select = document.getElementById('bodyPartSelect');
+        select.innerHTML = '<option value="">Select a body part...</option>';
+        if (Array.isArray(data)) {
+          data.forEach(part => {
+            const option = document.createElement('option');
+            option.value = part;
+            option.textContent = part;
+            select.appendChild(option);
+          });
+        }
+      })
+      .catch(() => {
+        alert("Error fetching body part list.");
+      });
+  });
+
+  document.getElementById('bodyPartSelect').addEventListener('change', (e) => {
+    const bodyPart = e.target.value;
+    const container = document.getElementById('bodyPartExercisesContainer');
+    container.innerHTML = "";
+    if (!bodyPart) return;
+
+    fetch(`{% url 'workouts:api_exercises_by_bodypart' bodypart='PLACEHOLDER' %}`.replace("PLACEHOLDER", bodyPart))
+      .then(resp => resp.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          data.forEach(ex => {
+            container.appendChild(createExerciseCard(ex));
+          });
+        } else {
+          container.innerHTML = "<p class='text-danger'>Error loading exercises for this body part.</p>";
+        }
+      })
+      .catch(() => {
+        container.innerHTML = "<p class='text-danger'>Error fetching data.</p>";
+      });
+  });
+
+  document.getElementById('fetchEquipmentBtn').addEventListener('click', () => {
+    fetch("{% url 'workouts:api_equipment_list' %}")
+      .then(resp => resp.json())
+      .then(data => {
+        const select = document.getElementById('equipmentSelect');
+        select.innerHTML = '<option value="">Select equipment...</option>';
+        if (Array.isArray(data)) {
+          data.forEach(eq => {
+            const option = document.createElement('option');
+            option.value = eq;
+            option.textContent = eq;
+            select.appendChild(option);
+          });
+        }
+      })
+      .catch(() => {
+        alert("Error fetching equipment list.");
+      });
+  });
+
+  document.getElementById('equipmentSelect').addEventListener('change', (e) => {
+    const equipment = e.target.value;
+    const container = document.getElementById('equipmentExercisesContainer');
+    container.innerHTML = "";
+    if (!equipment) return;
+
+    fetch(`{% url 'workouts:api_exercises_by_equipment' equipment='PLACEHOLDER' %}`.replace("PLACEHOLDER", equipment))
+      .then(resp => resp.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          data.forEach(ex => {
+            container.appendChild(createExerciseCard(ex));
+          });
+        } else {
+          container.innerHTML = "<p class='text-danger'>Error loading exercises for this equipment.</p>";
+        }
+      })
+      .catch(() => {
+        container.innerHTML = "<p class='text-danger'>Error fetching data.</p>";
+      });
+  });
+
+  document.getElementById('fetchTargetBtn').addEventListener('click', () => {
+    fetch("{% url 'workouts:api_target_list' %}")
+      .then(resp => resp.json())
+      .then(data => {
+        const select = document.getElementById('targetSelect');
+        select.innerHTML = '<option value="">Select a target muscle...</option>';
+        if (Array.isArray(data)) {
+          data.forEach(tar => {
+            const option = document.createElement('option');
+            option.value = tar;
+            option.textContent = tar;
+            select.appendChild(option);
+          });
+        }
+      })
+      .catch(() => {
+        alert("Error fetching target list.");
+      });
+  });
+
+  document.getElementById('targetSelect').addEventListener('change', (e) => {
+    const target = e.target.value;
+    const container = document.getElementById('targetExercisesContainer');
+    container.innerHTML = "";
+    if (!target) return;
+
+    fetch(`{% url 'workouts:api_exercises_by_target' target='PLACEHOLDER' %}`.replace("PLACEHOLDER", target))
+      .then(resp => resp.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          data.forEach(ex => {
+            container.appendChild(createExerciseCard(ex));
+          });
+        } else {
+          container.innerHTML = "<p class='text-danger'>Error loading exercises for this target muscle.</p>";
+        }
+      })
+      .catch(() => {
+        container.innerHTML = "<p class='text-danger'>Error fetching data.</p>";
+      });
+  });
+
+  document.getElementById('searchByNameBtn').addEventListener('click', () => {
+    const name = document.getElementById('exerciseNameInput').value.trim();
+    const container = document.getElementById('nameExercisesContainer');
+    container.innerHTML = "";
+
+    if (!name) {
+      container.innerHTML = "<p class='text-warning'>Please enter a name.</p>";
+      return;
+    }
+
+    fetch(`{% url 'workouts:api_exercises_by_name' name='PLACEHOLDER' %}`.replace("PLACEHOLDER", name))
+      .then(resp => resp.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          if (data.length === 0) {
+            container.innerHTML = "<p class='text-warning'>No exercises found for that name.</p>";
+          } else {
+            data.forEach(ex => {
+              container.appendChild(createExerciseCard(ex));
+            });
+          }
+        } else {
+          container.innerHTML = "<p class='text-danger'>Error loading exercises for that name.</p>";
+        }
+      })
+      .catch(() => {
+        container.innerHTML = "<p class='text-danger'>Error fetching data.</p>";
+      });
+  });
+</script>
+{% endblock %}

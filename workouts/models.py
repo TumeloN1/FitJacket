@@ -8,7 +8,7 @@ class WorkoutPlan(models.Model):
     name = models.CharField(max_length=100)
     goal = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    content = models.TextField()  # GPT-generated plan (JSON or text)
+    content = models.TextField()
 
     def __str__(self):
         return f"{self.user.username} - {self.name}"

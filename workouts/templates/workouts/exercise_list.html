@@ -1,14 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Available Exercises</h1>
-    <ul>
-        {% for exercise in exercises %}
-            <li>
-                <strong>{{ exercise.name|title }}</strong><br>
-                <img src="{{ exercise.gifUrl }}" width="200" alt="{{ exercise.name }}"><br>
-                Body Part: {{ exercise.bodyPart }} | Equipment: {{ exercise.equipment }}
-            </li>
-        {% endfor %}
-    </ul>
-  {% endblock %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Exercise Library</h2>
+  {% if exercises %}
+    <div class="row">
+      {% for exercise in exercises %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{{ exercise.gifUrl }}" class="card-img-top" alt="{{ exercise.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ exercise.name }}</h5>
+              <p class="card-text">
+                <strong>Body Part:</strong> {{ exercise.bodyPart }}<br>
+                <strong>Target:</strong> {{ exercise.target }}<br>
+                <strong>Equipment:</strong> {{ exercise.equipment }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-warning text-center" role="alert">
+      No exercises found.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

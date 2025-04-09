@@ -2,20 +2,25 @@
 
 {% block content %}
 <div class="container mt-5">
-  <h2 class="mb-4 text-center">Your Workout Plan</h2>
-
-  {% if plan %}
-    <div class="card p-4">
-      <h4>{{ plan.name }}</h4>
-      <p><strong>Goal:</strong> {{ plan.goal }}</p>
-      <p><strong>Generated on:</strong> {{ plan.created_at|date:"F j, Y" }}</p>
-      <hr>
-      <pre style="white-space: pre-wrap;">{{ plan.content }}</pre>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h2 class="mb-4 text-center">Your Workout Plan</h2>
+      {% if plan %}
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h4 class="card-title">{{ plan.name }}</h4>
+            <p class="card-text"><strong>Goal:</strong> {{ plan.goal }}</p>
+            <p class="card-text"><strong>Generated on:</strong> {{ plan.created_at|date:"F j, Y" }}</p>
+            <hr>
+            <div class="card-text" style="white-space: pre-wrap;">{{ plan.content }}</div>
+          </div>
+        </div>
+      {% else %}
+        <div class="alert alert-info text-center" role="alert">
+          No workout plan available yet.
+        </div>
+      {% endif %}
     </div>
-  {% else %}
-    <div class="alert alert-info text-center">
-      No workout plan available yet.
-    </div>
-  {% endif %}
+  </div>
 </div>
 {% endblock %}
