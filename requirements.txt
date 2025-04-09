@@ -1,3 +1,6 @@
-Django==5.2.10
-mongoengine==0.28.1
+Django~=5.1.5
+mongoengine~=0.29.1
 pyproject-distutils==0.3.0
+
+openai~=1.72.0
+requests~=2.32.3

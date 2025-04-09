@@ -61,7 +61,7 @@ ROOT_URLCONF = 'FitJacket.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'FitJacket', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,10 +123,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'FitJacket', 'static')]
 
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-fielda
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EXERCISESDB_API_KEY = os.environ.get('EXERCISEDB_API_KEY', '0c352b3043mshb17b79077c49065p1370f9jsnfc01abd2f695')
+
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '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')

@@ -2,18 +2,21 @@
 
 {% block content %}
 <div class="container mt-5">
-  <h2 class="mb-4 text-center">Workout Recommendations</h2>
-
-  {% if recommendations %}
-    <ul class="list-group">
-      {% for item in recommendations %}
-        <li class="list-group-item">{{ item }}</li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <div class="alert alert-warning text-center">
-      No recommendations available at this time.
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h2 class="mb-4 text-center">Workout Recommendations</h2>
+      {% if recommendations %}
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div style="white-space: pre-wrap;">{{ recommendations }}</div>
+          </div>
+        </div>
+      {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+          No recommendations available at this time.
+        </div>
+      {% endif %}
     </div>
-  {% endif %}
+  </div>
 </div>
 {% endblock %}
