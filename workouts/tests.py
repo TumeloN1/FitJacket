@@ -30,7 +30,6 @@ class WorkoutsAppTests(TestCase):
         self.assertContains(response, "Your Workout Plan")
 
     def test_log_workout(self):
-        # Simulate posting a new workout log
         workout_data = {
             "date": "2025-04-10",
             "exercise": "Push Ups",

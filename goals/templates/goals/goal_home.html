@@ -17,6 +17,9 @@
                             <p><strong>Target:</strong> {{ goal.target_metric }}</p>
                             <p><strong>Target Date:</strong> {{ goal.target_date|date:"F j, Y" }}</p>
                             <p class="text-muted small">Created on {{ goal.created_at|date:"F j, Y" }}</p>
+                            <a href="{% url 'goals:goal_detail' goal.id %}" class="btn btn-sm btn-outline-success">View Plan</a>
+                            <a href="{% url 'goals:update_goal' goal.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a href="{% url 'goals:delete_goal' goal.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -26,6 +29,7 @@
         <div class="alert alert-info" role="alert">
             You haven't added any goals yet. Let's get started on your fitness journey!
         </div>
+        <a href="{% url 'goals:create_goal' %}" class="btn btn-sm btn-outline-primary">Create Goal</a>
     {% endif %}
 </div>
 {% endblock %}

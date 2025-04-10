@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0877638d-e896-492e-9b0b-fbde30bdf71f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/DjangoProject.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/FitJacket.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitJacket/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitJacket/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitJacket/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitJacket/static/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitJacket/static/img/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitJacket/templates/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitJacket/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitJacket/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/forms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset_complete.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset_confirm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/password_reset_done.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/templates/accounts/signup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adminpanel/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adminpanel/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adminpanel/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adminpanel/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adminpanel/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adminpanel/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adminpanel/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/forms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/static/goals/goals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/templates/goals/create_goal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/templates/goals/goal_home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/templates/goals/view_goals.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mongo_config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/exercise_views/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/exercise_views/exercises.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/forms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/services/gpt_plan_generator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/services/recommendation_engine.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/confirm_delete.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/exercise_browse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/exercise_list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/log_workout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/recommendations.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/view_plan.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/views.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "jlouisugbo"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/TumeloN1/FitJacket/",
+    "accountId": "48b99c52-a938-4fa4-94a5-fe61e7ff95bd"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2vVMo2oFPvhxJ81PBF6XhPo3Zr3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
+        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0877638d-e896-492e-9b0b-fbde30bdf71f" name="Changes" comment="" />
+      <created>1744225960842</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744225960842</updated>
+      <workItem from="1744225963287" duration="18000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
