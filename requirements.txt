@@ -1,10 +1,7 @@
-4Django~=5.1.5
+Django~=5.1.5
 mongoengine~=0.29.1
 pyproject-distutils==0.3.0
-
-openai~=1.72.0
 requests~=2.32.3
-Django~=5.1.5
 torch~=2.6.0
 transformers~=4.51.1
 python-dotenv~=1.1.0
