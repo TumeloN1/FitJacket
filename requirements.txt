@@ -1,7 +1,15 @@
 Django~=5.1.5
 mongoengine~=0.29.1
-pyproject-distutils==0.3.0
 requests~=2.32.3
 torch~=2.6.0
 transformers~=4.51.1
 python-dotenv~=1.1.0
+setuptools>=65.5.1
+wheel
+
+'''
+to download these requirements, run these please
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+'''
