@@ -1,61 +1,65 @@
-from django.shortcuts import render
-from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
-from .forms import CustomUserCreationForm, CustomErrorList
-from django.shortcuts import redirect
-from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from .documents import Account
+from django.contrib.auth.hashers import make_password
+
+def login(request):
+    if request.method == 'POST':
+        username_or_email = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '').strip()
+
+        user = authenticate(request, username=username_or_email, password=password)
+        if user is not None:
+            auth_login(request, user)
+            messages.success(request, "Logged in successfully.")
+            return redirect('homepage')
+        else:
+            messages.error(request, "Invalid username/email or password.")
+
+    return render(request, 'accounts/login.html', {'template_data': {'title': 'Login'}})
+
 
 @login_required
 def logout(request):
     auth_logout(request)
-    return redirect('home.index')
+    messages.success(request, "Logged out successfully.")
+    return redirect('homepage')
 
-def login(request):
-    template_data = {}
-    template_data['title'] = 'Login'
-    if request.method == 'GET':
-        return render(request, 'accounts/login.html',
-                      {'template_data': template_data})
-    elif request.method == 'POST':
-        username_or_email = request.POST['username']  # The input could be a username or email
-        password = request.POST['password']
-
-        # Check if the input is an email
-        if '@' in username_or_email:
-            try:
-                # Fetch the user by email
-                user = User.objects.get(email=username_or_email)
-                username = user.username  # Use the username for authentication
-            except User.DoesNotExist:
-                # If no user is found with the email, set username to None
-                username = None
-        else:
-            # If it's not an email, assume it's a username
-            username = username_or_email
-
-        # Authenticate the user
-        user = authenticate(request, username=username, password=password)
-        if user is None:
-            template_data['error'] = 'The username or password is incorrect.'
-            return render(request, 'accounts/login.html',
-                  {'template_data': template_data})
-        else:
-            auth_login(request, user)
-            return redirect('home.index')
 
 def signup(request):
-    template_data = {}
-    template_data['title'] = 'Sign Up'
-    if request.method == 'GET':
-        template_data['form'] = CustomUserCreationForm()
-        return render(request, 'accounts/signup.html',
-                      {'template_data': template_data})
-    elif request.method == 'POST':
-        form = CustomUserCreationForm(request.POST, error_class=CustomErrorList)
-        if form.is_valid():
-            form.save()
-            return redirect('accounts.login')
-        else:
-            template_data['form'] = form
-            return render(request, 'accounts/signup.html',
-        {'template_data': template_data})
+    if request.method == 'POST':
+        username   = request.POST.get('username', '').strip()
+        email      = request.POST.get('email', '').strip()
+        first_name = request.POST.get('first_name', '').strip()
+        last_name  = request.POST.get('last_name', '').strip()
+        password   = request.POST.get('password', '')
+        password2  = request.POST.get('password2', '')
+
+        error = None
+        if not all([username, email, first_name, last_name]):
+            error = "All fields are required."
+        elif password != password2:
+            error = "Passwords do not match."
+        elif Account.objects(username=username).first():
+            error = "Username already exists."
+        elif Account.objects(email=email).first():
+            error = "Email already exists."
+
+        if error:
+            messages.error(request, error)
+            return render(request, 'accounts/signup.html', {'template_data': {'title': 'Sign Up'}})
+
+        acct = Account(
+            username=username,
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            password_hash=make_password(password)
+        )
+        acct.save()
+        messages.success(request, "Account created successfully. Please log in.")
+        return redirect('accounts:login')
+
+    return render(request, 'accounts/signup.html', {'template_data': {'title': 'Sign Up'}})

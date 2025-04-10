@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 fade-in" style="max-width: 600px;">
+    <h2 class="text-center mb-4">Edit Fitness Goal</h2>
+    <form method="POST" class="card p-4 scale-hover">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn mt-3">Update Goal</button>
+    </form>
+    <a href="{% url 'goals:goal_detail' goal.id %}" class="btn btn-link mt-3">Cancel</a>
+</div>
+{% endblock %}

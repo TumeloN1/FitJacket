@@ -31,10 +31,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li> <!-- Make if needed -->
-                <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li> <!-- Hook up later -->
+                <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li> <!-- Make if needed -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'workouts:exercise_list' %}">Exercise List</a></li> <!-- Hook up later -->
                 <li class="nav-item"><a class="nav-link" href="{% url 'goals:goal_home' %}">My Goals</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'workouts:exercise_list' %}">Workout Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'workouts:log_workout' %}">Workout Log</a></li>
 
                 {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout ({{ user.username }})</a></li>

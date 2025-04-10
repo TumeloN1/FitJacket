@@ -1,14 +1,25 @@
+# workouts/admin.py
 from django.contrib import admin
 from .models import WorkoutPlan, WorkoutLog
+from accounts.documents import Account
 
 @admin.register(WorkoutPlan)
 class WorkoutPlanAdmin(admin.ModelAdmin):
-    list_display = ("user", "name", "goal", "created_at")
-    search_fields = ("user__username", "name", "goal")
-    list_filter = ("created_at",)
+    list_display = ('username', 'name', 'goal', 'created_at')
+    search_fields = ('account_id', 'name', 'goal')
+
+    def username(self, obj):
+        acct = Account.objects(id=obj.account_id).first()
+        return acct.username if acct else obj.account_id
+    username.short_description = 'User'
+
 
 @admin.register(WorkoutLog)
 class WorkoutLogAdmin(admin.ModelAdmin):
-    list_display = ("user", "date", "exercise", "sets", "reps", "weight", "distance", "duration")
-    search_fields = ("user__username", "exercise")
-    list_filter = ("date", "exercise")
+    list_display = ('username', 'exercise', 'date', 'sets', 'reps')
+    search_fields = ('account_id', 'exercise')
+
+    def username(self, obj):
+        acct = Account.objects(id=obj.account_id).first()
+        return acct.username if acct else obj.account_id
+    username.short_description = 'User'

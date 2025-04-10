@@ -15,5 +15,4 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'FitJacket.settings')
 from mongo_config import connect_to_mongo
 connect_to_mongo()
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project.settings')
 application = get_wsgi_application()

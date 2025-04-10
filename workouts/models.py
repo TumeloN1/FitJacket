@@ -11,7 +11,7 @@ class WorkoutPlan(models.Model):
     content = models.TextField()
 
     def __str__(self):
-        return f"{self.user.username} - {self.name}"
+        return f"{self.user.username} – {self.name}"
 
 class WorkoutLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -25,4 +25,4 @@ class WorkoutLog(models.Model):
     notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.exercise} on {self.date}"
+        return f"{self.user.username} – {self.exercise} on {self.date}"
