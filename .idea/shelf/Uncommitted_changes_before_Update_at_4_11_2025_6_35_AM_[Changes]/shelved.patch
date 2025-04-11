@@ -1,0 +1,116 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"398d5cb0-178e-4640-9ec2-6c1b018ef0ce\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/FitJacket/static/img/equipment.jpg\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/FitJacket/static/img/exercise.jpg\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/FitJacket/static/img/target.jpg\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/workouts/templates/workouts/add_exercises.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/workouts/templates/workouts/bodypart_browse.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/workouts/templates/workouts/cache_dump.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/workouts/templates/workouts/equipment_browse.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/workouts/templates/workouts/exercise_detail.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/workouts/templates/workouts/targetMuscle_browse.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/FitJacket.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/FitJacket.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/FitJacket/settings.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/FitJacket/settings.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/FitJacket/static/css/style.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/FitJacket/static/css/style.css\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/db.sqlite3\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/db.sqlite3\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/keys.env\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/keys.env\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/requirements.txt\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/requirements.txt\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/workouts/exercise_views/__init__.py\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/workouts/exercise_views/exercises.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/workouts/exercises_views.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/workouts/models.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/workouts/models.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/workouts/templates/workouts/exercise_browse.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/workouts/templates/workouts/exercise_browse.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/workouts/templates/workouts/exercise_list.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/workouts/templates/workouts/exercise_list.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/workouts/tests.py\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/workouts/urls.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/workouts/urls.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/workouts/views.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/workouts/views.py\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n        <option value=\"HTML File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;jlouisugbo&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/TumeloN1/FitJacket.git&quot;,\r\n    &quot;accountId&quot;: &quot;48b99c52-a938-4fa4-94a5-fe61e7ff95bd&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2vRSUP2EJBlJot7M5pX5tnAfTuV\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,\r\n    &quot;Python tests.Python tests for tests.WorkoutsAppTests.test_view_workout_plan_generation.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;ignore_missing_gitignore&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/joeys/PycharmProjects/FitJacket&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\joeys\\PycharmProjects\\FitJacket\\FitJacket\\static\\img\" />\r\n      <recent name=\"C:\\Users\\joeys\\PycharmProjects\\FitJacket\\workouts\" />\r\n      <recent name=\"C:\\Users\\joeys\\FitJacket\\FitJacket\" />\r\n      <recent name=\"C:\\Users\\joeys\\PycharmProjects\\DjangoProject\\static\\img\" />\r\n      <recent name=\"C:\\Users\\joeys\\PycharmProjects\\DjangoProject\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Python tests for tests.WorkoutsAppTests.test_view_workout_plan_generation\" type=\"tests\" factoryName=\"Autodetect\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"DjangoProject\" />\r\n      <option name=\"ENV_FILES\" value=\"\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/workouts\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"_new_additionalArguments\" value=\"&quot;&quot;\" />\r\n      <option name=\"_new_target\" value=\"&quot;tests.WorkoutsAppTests.test_view_workout_plan_generation&quot;\" />\r\n      <option name=\"_new_targetType\" value=\"&quot;PYTHON&quot;\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Python tests.Python tests for tests.WorkoutsAppTests.test_view_workout_plan_generation\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177\" />\r\n        <option value=\"bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"398d5cb0-178e-4640-9ec2-6c1b018ef0ce\" name=\"Changes\" comment=\"\" />\r\n      <created>1744106409042</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1744106409042</updated>\r\n      <workItem from=\"1744106410210\" duration=\"12296000\" />\r\n      <workItem from=\"1744202844137\" duration=\"11449000\" />\r\n      <workItem from=\"1744225984698\" duration=\"27048000\" />\r\n      <workItem from=\"1744313765599\" duration=\"127000\" />\r\n      <workItem from=\"1744313897123\" duration=\"51000\" />\r\n      <workItem from=\"1744313951226\" duration=\"63000\" />\r\n      <workItem from=\"1744314056430\" duration=\"144000\" />\r\n      <workItem from=\"1744314236040\" duration=\"309000\" />\r\n      <workItem from=\"1744314551516\" duration=\"10574000\" />\r\n      <workItem from=\"1744334036271\" duration=\"6971000\" />\r\n      <workItem from=\"1744345709960\" duration=\"2140000\" />\r\n      <workItem from=\"1744348168388\" duration=\"295000\" />\r\n      <workItem from=\"1744349876652\" duration=\"17145000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/workouts/models.py</url>\r\n          <option name=\"timeStamp\" value=\"2\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/FitJacket/wsgi.py</url>\r\n          <line>9</line>\r\n          <option name=\"timeStamp\" value=\"3\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/FitJacket$.coverage\" NAME=\" Coverage Results\" MODIFIED=\"1744212276492\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$/workouts\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision d5363759c7a1cafbb8458b041bdf1fb5b34d2204)
++++ b/.idea/workspace.xml	(date 1744367578693)
+@@ -4,32 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="398d5cb0-178e-4640-9ec2-6c1b018ef0ce" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/FitJacket/static/img/equipment.jpg" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/FitJacket/static/img/exercise.jpg" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/FitJacket/static/img/target.jpg" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/add_exercises.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/bodypart_browse.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/cache_dump.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/equipment_browse.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/exercise_detail.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/targetMuscle_browse.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/FitJacket.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FitJacket.iml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/FitJacket/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/FitJacket/settings.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/FitJacket/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FitJacket/static/css/style.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/keys.env" beforeDir="false" afterPath="$PROJECT_DIR$/keys.env" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/workouts/exercise_views/__init__.py" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/workouts/exercise_views/exercises.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/exercises_views.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/workouts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/models.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/exercise_browse.html" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/templates/workouts/exercise_browse.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/exercise_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/templates/workouts/exercise_list.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/workouts/tests.py" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/workouts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/urls.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/workouts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/views.py" afterDir="false" />
+-    </list>
++    <list default="true" id="398d5cb0-178e-4640-9ec2-6c1b018ef0ce" name="Changes" comment="finished 1st api integration" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -67,25 +42,26 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+-    &quot;Python tests.Python tests for tests.WorkoutsAppTests.test_view_workout_plan_generation.executor&quot;: &quot;Run&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+-    &quot;ignore_missing_gitignore&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/joeys/PycharmProjects/FitJacket&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "DefaultHtmlFileTemplate": "HTML File",
++    "Python tests.Python tests for tests.WorkoutsAppTests.test_view_workout_plan_generation.executor": "Run",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
++    "git-widget-placeholder": "main",
++    "ignore.virus.scanning.warn.message": "true",
++    "ignore_missing_gitignore": "true",
++    "last_opened_file_path": "C:/Users/joeys/PycharmProjects/FitJacket",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
++    "vue.rearranger.settings.migration": "true"
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="C:\Users\joeys\PycharmProjects\FitJacket\FitJacket\static\img" />
+@@ -146,12 +122,25 @@
+       <workItem from="1744334036271" duration="6971000" />
+       <workItem from="1744345709960" duration="2140000" />
+       <workItem from="1744348168388" duration="295000" />
+-      <workItem from="1744349876652" duration="17145000" />
++      <workItem from="1744349876652" duration="17265000" />
++    </task>
++    <task id="LOCAL-00001" summary="finished 1st api integration">
++      <option name="closed" value="true" />
++      <created>1744367532840</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1744367532840</updated>
+     </task>
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
++  </component>
++  <component name="VcsManagerConfiguration">
++    <MESSAGE value="finished 1st api integration" />
++    <option name="LAST_COMMIT_MESSAGE" value="finished 1st api integration" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
