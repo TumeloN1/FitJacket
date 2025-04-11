@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center">Browse by Target Muscle</h2>
+  <hr/>
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <select id="targetSelect" class="form-control">
+        <option value="">Select a target muscle...</option>
+      </select>
+    </div>
+  </div>
+  <div class="row" id="targetExercisesContainer"></div>
+</div>
+
+<script>
+  // Load the list of targets
+  const targetUrl = "{% url 'workouts:api_target_list' %}";
+  function loadTargetList() {
+    const sel = document.getElementById('targetSelect');
+    if (sel.options.length > 1) return; // already loaded
+    fetch(targetUrl)
+      .then(r => r.json())
+      .then(list => {
+        if (Array.isArray(list)) {
+          list.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item;
+            opt.textContent = item;
+            sel.appendChild(opt);
+          });
+        } else if (list.targets) {
+          list.targets.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item;
+            opt.textContent = item;
+            sel.appendChild(opt);
+          });
+        }
+      });
+  }
+  loadTargetList();
+
+function createExerciseCard(ex) {
+    const col = document.createElement('div');
+    col.classList.add('col-md-4', 'mb-3');
+    const detailUrl = `/workouts/exercises/detail/${encodeURIComponent(ex.id)}/`;
+    const saveUrl = `/workouts/exercises/save/${encodeURIComponent(ex.id)}/`;
+
+    col.innerHTML = `
+      <div class="card h-100">
+        <img src="${ex.gifUrl}" class="card-img-top" alt="${ex.name}">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="${detailUrl}">${ex.name}</a>
+          </h5>
+          <p class="card-text">
+            <strong>Body Part:</strong> ${ex.bodyPart}<br>
+            <strong>Target:</strong> ${ex.target}<br>
+            <strong>Equipment:</strong> ${ex.equipment}
+          </p>
+          <form action="${saveUrl}" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <button type="submit" class="btn btn-outline-primary">Save Exercise</button>
+          </form>
+        </div>
+      </div>
+    `;
+    return col;
+}
+
+  document.getElementById('targetSelect').addEventListener('change', e => {
+    const val = e.target.value;
+    if (!val) return;
+    fetch(`{% url 'workouts:api_exercises_by_target' target='PLACEHOLDER' %}`.replace('PLACEHOLDER', val))
+      .then(r => r.json())
+      .then(data => {
+        const container = document.getElementById('targetExercisesContainer');
+        container.innerHTML = '';
+        if (Array.isArray(data)) data.forEach(ex => container.appendChild(createExerciseCard(ex)));
+      });
+  });
+</script>
+{% endblock %}

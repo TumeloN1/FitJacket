@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Exercise Cache Dump</h2>
+  {% for category, keys in cache.items %}
+    <div class="card mb-4">
+      <div class="card-header">
+        <strong>{{ category|title }}</strong> ({{ keys|length }})
+      </div>
+      <div class="card-body">
+        {% if keys %}
+          <ul class="list-group">
+            {% for key in keys %}
+              <li class="list-group-item">{{ key }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-muted">No cached entries.</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

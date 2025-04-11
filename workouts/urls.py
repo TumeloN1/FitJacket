@@ -1,8 +1,7 @@
-
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from workouts import views
-from workouts.exercise_views import exercises
+from . import views
+from . import exercises_views as api
 
 app_name = "workouts"
 
@@ -12,17 +11,25 @@ urlpatterns = [
     path('log/edit/<int:log_id>/', login_required(views.edit_workout_log), name="edit_workout_log"),
     path('log/delete/<int:log_id>/', login_required(views.delete_workout_log), name="delete_workout_log"),
     path('recommend/', login_required(views.recommend_workout), name="recommend_workout"),
-    path('exercises/', views.exercise_list, name="exercise_list"),
-    path("exercises/browse/", exercises.browse_exercises, name="browse_exercises"),
+    path('exercises/', login_required(views.exercise_list), name="exercise_list"),
 
-    path("api/exercises/", exercises.api_exercises_list, name="api_exercises_list"),
-    path("api/exercises/bodyPartList/", exercises.api_bodypart_list, name="api_bodypart_list"),
-    path("api/exercises/equipmentList/", exercises.api_equipment_list, name="api_equipment_list"),
-    path("api/exercises/targetList/", exercises.api_target_list, name="api_target_list"),
+    # Section browse pages
+    path('exercises/bodypart-browse/', login_required(api.bodypart_browse_view), name="bodypart_browse"),
+    path('exercises/target-browse/', login_required(api.target_browse_view), name="target_browse"),
+    path('exercises/equipment-browse/', login_required(api.equipment_browse_view), name="equipment_browse"),
 
-    path("api/exercises/bodyPart/<str:bodypart>/", exercises.api_exercises_by_bodypart, name="api_exercises_by_bodypart"),
-    path("api/exercises/equipment/<str:equipment>/", exercises.api_exercises_by_equipment, name="api_exercises_by_equipment"),
-    path("api/exercises/target/<str:target>/", exercises.api_exercises_by_target, name="api_exercises_by_target"),
-    path("api/exercises/name/<str:name>/", exercises.api_exercises_by_name, name="api_exercises_by_name"),
-    path("api/exercises/detail/<str:exercise_id>/", exercises.api_exercise_detail, name="api_exercise_detail"),
+    # API calls
+    path('api/exercises/', login_required(api.api_exercises_list), name="api_exercises_list"),
+    path('api/exercises/bodyPart/<str:bodypart>/', login_required(api.api_exercises_by_bodypart), name="api_exercises_by_bodypart"),
+    path('api/exercises/equipment/<str:equipment>/', login_required(api.api_exercises_by_equipment), name="api_exercises_by_equipment"),
+    path('api/exercises/target/<str:target>/', login_required(api.api_exercises_by_target), name="api_exercises_by_target"),
+    path('api/exercises/targets/', login_required(api.api_target_list),name="api_target_list"),
+    path('api/exercises/bodyparts/', login_required(api.api_bodypart_list), name="api_bodypart_list"),
+    path('api/exercises/equipmentlist/',login_required(api.api_equipment_list),name="api_equipment_list"),
+
+    path('exercises/cache/', login_required(api.cache_dump_html),name='cache_dump_html'),
+    path('exercises/detail/<str:exercise_id>/', login_required(api.exercise_detail_view), name="exercise_detail"),
+    path('exercises/save/<str:exercise_id>/', login_required(api.save_exercise_view), name="save_exercise"),
+    path('exercises/add/', login_required(views.add_exercises_home), name="add_exercises"),
+    path('exercises/delete/<int:pk>/', login_required(views.delete_saved_exercise), name="delete_exercise"),
 ]

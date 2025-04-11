@@ -1,0 +1,26 @@
+<!-- workouts/templates/workouts/exercise_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-4">
+  <h1>{{ exercise.name }}</h1>
+  <img src="{{ exercise.gifUrl }}" alt="Exercise Animation" class="img-fluid mb-3">
+  <p><strong>Body Part:</strong> {{ exercise.bodyPart }}</p>
+  <p><strong>Target Muscle:</strong> {{ exercise.target }}</p>
+  <p><strong>Equipment:</strong> {{ exercise.equipment }}</p>
+  {% if exercise.secondaryMuscles %}
+    <p><strong>Secondary Muscles:</strong> {{ exercise.secondaryMuscles|join:", " }}</p>
+  {% endif %}
+  <h4>Instructions</h4>
+  <ol>
+    {% for step in exercise.instructions %}
+      <li>{{ step }}</li>
+    {% endfor %}
+  </ol>
+  <form action="{% url 'workouts:save_exercise' exercise_id=exercise.id %}" method="post" class="mt-3">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Save Exercise</button>
+  </form>
+  <a href="{% url 'workouts:exercise_list' %}" class="btn btn-secondary mt-3">Back to Library</a>
+</div>
+{% endblock %}

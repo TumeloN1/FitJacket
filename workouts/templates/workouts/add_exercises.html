@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="text-center mb-4">Add More Exercises</h2>
+  <div class="row">
+
+    <div class="col-md-4 text-center">
+      <img src="{% static 'img/target.jpg' %}" class="img-fluid mb-3" alt="Target Browse">
+      <a href="{% url 'workouts:target_browse' %}" class="btn btn-primary btn-lg">Browse by Target Exercise</a>
+    </div>
+
+    <div class="col-md-4 text-center">
+      <img src="{% static 'img/equipment.jpg' %}" class="img-fluid mb-3" alt="Equipment Browse">
+      <a href="{% url 'workouts:equipment_browse' %}" class="btn btn-primary btn-lg">Browse by Equipment Exercise</a>
+    </div>
+
+    <div class="col-md-4 text-center">
+      <img src="{% static 'img/exercise.jpg' %}" class="img-fluid mb-3" alt="Body Part Browse">
+      <a href="{% url 'workouts:bodypart_browse' %}" class="btn btn-primary btn-lg">Browse by Body Part Exercise</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

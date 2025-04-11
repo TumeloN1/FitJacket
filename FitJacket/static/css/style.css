@@ -1,7 +1,7 @@
 html, body {
     font-family: 'Poppins', sans-serif;
     background-color: #0a0f24;
-    color: #e6e6e6;
+    color: #ffffff;
 }
 
 label,
@@ -34,16 +34,32 @@ label,
 .form-control {
     background-color: #141a33;
     border: 1px solid #00ffe5;
-    color: #e6e6e6;
+    color: #ffffff;
 }
 .form-control:focus {
     box-shadow: 0 0 5px 2px rgba(0, 255, 229, 0.5);
     border-color: #00ffe5;
 }
 
+.card,
+.card-body,
+.card h5.card-title,
+.card .card-text,
+.card .card-text strong,
+.card .card-body details summary,
+.card .card-body li {
+  color: #ffffff !important;
+}
+
+.nav-link.active {
+  background-color: #ffffff !important;
+  color: #0a0f24 !important;
+  box-shadow: 0 0 8px rgba(0,255,229,0.7);
+}
+
 .ms-footer, .ms-footer-bottom {
     background-color: #0a0f24 !important;
-    color: #ccc;
+    color: #ffffff;
 }
 .ms-footer a, .ms-footer-bottom a {
     color: #00ffe5;
