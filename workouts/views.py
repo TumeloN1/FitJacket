@@ -1,21 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from .models import WorkoutPlan, WorkoutLog
-from .forms import WorkoutLogForm
-from .services.gpt_plan_generator import generate_plan
+from django.shortcuts import get_object_or_404
+from .models import WorkoutLog
 from .services.recommendation_engine import generate_recommendation
-import requests
-from FitJacket.settings import EXERCISESDB_API_KEY as exercisekey
-
-# workouts/views.py
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import WorkoutPlan
 from .forms import WorkoutLogForm
 from .services.gpt_plan_generator import generate_plan
+from workouts.models import WorkoutPlan, SavedExercise
+from django.views.decorators.http import require_POST
 
 @login_required
 def view_workout_plan(request):
@@ -78,16 +70,38 @@ def recommend_workout(request):
     recs = generate_recommendation(request.user)
     return render(request, "workouts/recommendations.html", {"recommendations": recs})
 
+@login_required
+def add_exercises_home(request):
+    return render(request, "workouts/add_exercises.html")
+
+@login_required
 def exercise_list(request):
-    url = "https://exercisedb.p.rapidapi.com/exercises"
-    headers = {
-        "X-RapidAPI-Key": exercisekey,
-        "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
-    }
-    try:
-        response = requests.get(url, headers=headers)
-        exercises = response.json() if response.status_code == 200 else []
-    except Exception as e:
-        exercises = []
-        messages.error(request, f"Error fetching exercises: {e}")
-    return render(request, "workouts/exercise_list.html", {"exercises": exercises})
+    saved_qs = SavedExercise.objects.filter(user=request.user).order_by('-saved_at')
+
+    exercises = []
+    for se in saved_qs:
+
+        secondary = getattr(se, 'secondaryMuscles', None)
+        exercises.append({
+            "pk": se.pk,
+            "id": se.exercise_id,
+            "exercise_name": se.exercise_name,
+            "bodyPart": se.bodyPart,
+            "target": se.target,
+            "equipment": se.equipment,
+            "gifUrl": se.gifUrl,
+            "secondaryMuscles": secondary.split(", ") if secondary else [],
+            "instructions": se.instructions.split("\n") if se.instructions else [],
+        })
+
+    return render(request, "workouts/exercise_list.html", {
+        "exercises": exercises
+    })
+
+@login_required
+@require_POST
+def delete_saved_exercise(request, pk):
+    se = get_object_or_404(SavedExercise, pk=pk, user=request.user)
+    se.delete()
+    messages.success(request, "Exercise removed from your library.")
+    return redirect("workouts:exercise_list")

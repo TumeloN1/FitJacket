@@ -1,23 +1,16 @@
 from pathlib import Path
 import os
-import mongoengine as db
 from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
+import mongoengine
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / "keys.env")
 
-SECRET_KEY = 'django-insecure-oe)+a7y6&afed9%+758ctns5=he4ff9)y$otp$fc#uhq3$4tmp'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-secure-fitjacketteam2")
 DEBUG = True
 ALLOWED_HOSTS = []
 
-MONGO_DB_NAME = 'FitJacketDatabase'
-MONGO_ATLAS_URI = os.environ.get(
-    'MONGO_ATLAS_URI',
-    'mongodb+srv://fitjacketteam2:bmZQ1y5FerkHVHuw@fitjacket.hktnt3w.mongodb.net/FitJacketDatabase?retryWrites=true&w=majority'
-)
-
+# databases and middleware
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,50 +43,44 @@ DATABASES = {
     }
 }
 
-ROOT_URLCONF = 'FitJacket.urls'
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
-AUTHENTICATION_BACKENDS = [
-    'accounts.auth_backends.MongoEngineBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
+# url, templates, backends
+ROOT_URLCONF = 'FitJacket.urls'
+WSGI_APPLICATION = 'FitJacket.wsgi.application'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'FitJacket', 'templates')],
+        'DIRS': [BASE_DIR / 'FitJacket' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.csrf'
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'FitJacket.wsgi.application'
 
+AUTHENTICATION_BACKENDS = [
+    'accounts.auth_backends.MongoEngineBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
+# mongoengine
+MONGO_DB_NAME   = 'FitJacketDatabase'
+MONGO_ATLAS_URI = os.getenv(
+    'MONGO_ATLAS_URI',
+    'mongodb+srv://fitjacketteam2:bmZQ1y5FerkHVHuw@fitjacket.hktnt3w.mongodb.net/FitJacketDatabase?retryWrites=true&w=majority'
+)
 
-'''
-mongodb+srv://fitjacketteam2:bmZQ1y5FerkHVHuw@fitjacket.hktnt3w.mongodb.net/?retryWrites=true&w=majority&appName=FitJacket
+mongoengine.connect(db=MONGO_DB_NAME, host=MONGO_ATLAS_URI)
 
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
-
-uri = "mongodb+srv://fitjacketteam2:bmZQ1y5FerkHVHuw@fitjacket.hktnt3w.mongodb.net/?appName=FitJacket"
-client = MongoClient(uri, server_api=ServerApi('1'))
-try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-except Exception as e:
-    print(e)
-'''
-
-
-db.connect(db=MONGO_DB_NAME, host=MONGO_ATLAS_URI)
-
+#just some validators
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -102,16 +89,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
+TIME_ZONE     = 'UTC'
+USE_I18N      = True
+USE_TZ        = True
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'FitJacket', 'static')]
+STATIC_URL        = '/static/'
+STATICFILES_DIRS  = [BASE_DIR / 'FitJacket' / 'static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EXERCISESDB_API_KEY = os.environ.get('EXERCISEDB_API_KEY')
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
-
-def connect_to_mongo():
-    db.connect(db=MONGO_DB_NAME, host=MONGO_ATLAS_URI)
+EXERCISESDB_API_KEY = os.getenv("EXERCISESDB_API_KEY")
