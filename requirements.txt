@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 #to download these requirements, run these please
 
 #python -m pip install --upgrade pip
 #python -m pip install -r requirements.txt
 
-=======
->>>>>>> d5a84b854b74852e6eaa384660ae18504615e670
 Django~=5.1.5
 mongoengine~=0.29.1
 requests~=2.32.3
@@ -13,7 +10,6 @@ torch~=2.6.0
 transformers~=4.51.1
 python-dotenv~=1.1.0
 setuptools>=65.5.1
-<<<<<<< HEAD
 wheel~=0.45.1
 dnspython~=2.7.0
 idna~=3.10
@@ -49,13 +45,3 @@ huggingface-hub~=0.30.2
 nltk~=3.9.1
 pydantic~=2.11.3
 openai~=1.72.0
-=======
-wheel
-
-
-
-#to download these requirements, run these please
-
-#python -m pip install --upgrade pip
-#python -m pip install -r requirements.txt
->>>>>>> d5a84b854b74852e6eaa384660ae18504615e670

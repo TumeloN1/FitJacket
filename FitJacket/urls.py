@@ -10,4 +10,5 @@ urlpatterns = [
     path('', include('home.urls'), name='home'),
     path('goals/', include('goals.urls'), name='goals'),
     path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    path('dashboard/', include('dashboard.urls'), name='dashboard'),
 ]

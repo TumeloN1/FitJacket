@@ -31,7 +31,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li> <!-- Make if needed -->
+                <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:view_dashboard' %}">Dashboard</a></li> <!-- Make if needed -->
                 <li class="nav-item"><a class="nav-link" href="{% url 'workouts:exercise_list' %}">Exercise Library</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'goals:goal_home' %}">My Goals</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'workouts:log_workout' %}">Workout Log</a></li>
