@@ -17,9 +17,16 @@
                 <div class="card-body">
                     <ul class="list-group">
                         {% for goal in goals %}
-                        <li class="list-group-item">
-                            <strong>{{ goal.title }}</strong> - {{ goal.description }}
-                        </li>
+                        <a href="{% url 'goals:goal_detail' goal.id %}" class="text-decoration-none">
+                            <div class="col-md-6 mb-4">
+                                <div class="card p-3 scale-hover">
+                                    <h5>{{ goal.get_goal_type_display }}</h5>
+                                    <p><strong>Description:</strong> {{ goal.description }}</p>
+                                    <p><strong>Target:</strong> {{ goal.target_metric }}</p>
+                                    <p><strong>Target Date:</strong> {{ goal.target_date }}</p>
+                                </div>
+                            </div>
+                        </a>
                         {% empty %}
                         <p class="text-muted">No goals set yet. <a href="{% url 'goals:goal_home' %}">Set a goal</a>.</p>
                         {% endfor %}
@@ -84,6 +91,60 @@
             </div>
         </div>
     </div>
+
+    <!-- Progress Charts Section -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header text-white">
+                    <h5 class="card-title mb-0">Progress Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="progressChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Example data for the chart
+    const labels = {{ progress.dates|safe }};
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Calories Burned',
+            data: {{ progress.calories|safe }},
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Your Progress Over Time'
+                }
+            }
+        }
+    };
+
+    const progressChart = new Chart(
+        document.getElementById('progressChart'),
+        config
+    );
+</script>
 {% endblock %}

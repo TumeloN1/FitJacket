@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}My Logs - FitJacket{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4">🎯 My Logged Workouts</h2>
+
+    {% if logs %}
+        <div class="row">
+            {% for log in logs %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ log.exercise }}</h5>
+                            <p class="card-text">
+                                <strong>Date:</strong> {{ log.date }}<br>
+                                <strong>Duration:</strong> {{ log.duration }} minutes<br>
+                                <strong>Calories Burned:</strong> {{ log.calories_burned }} kcal<br>
+                                <strong>Notes:</strong> {{ log.notes|default:"No additional notes" }}
+                            </p>
+                            <a href="{% url 'workouts:edit_workout_log' log.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a href="{% url 'workouts:delete_workout_log' log.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'workouts:log_workout'%}" class="btn btn-md btn-outline-danger">Log a workout</a>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            You haven't logged any workouts yet. Let's get started on your fitness journey!
+        </div>
+        <a href="{% url 'workouts:log_workout' %}" class="btn btn-sm btn-outline-primary">Log a workout</a>
+    {% endif %}
+</div>
+{% endblock %}
