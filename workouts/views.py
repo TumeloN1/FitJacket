@@ -27,6 +27,11 @@ def view_workout_plan(request):
 
 
 @login_required
+def view_logs(request):
+    logs = WorkoutLog.objects.filter(user=request.user).order_by('-date')
+    return render(request, "workouts/log_home.html", {"logs": logs})
+
+@login_required
 def log_workout(request):
     if request.method == "POST":
         form = WorkoutLogForm(request.POST)

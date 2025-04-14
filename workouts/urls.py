@@ -7,7 +7,8 @@ app_name = "workouts"
 
 urlpatterns = [
     path('plan/', login_required(views.view_workout_plan), name="view_plan"),
-    path('log/', login_required(views.log_workout), name="log_workout"),
+    path('log/', login_required(views.view_logs), name="log_home"),
+    path('log/create', login_required(views.log_workout), name="log_workout"),
     path('log/edit/<int:log_id>/', login_required(views.edit_workout_log), name="edit_workout_log"),
     path('log/delete/<int:log_id>/', login_required(views.delete_workout_log), name="delete_workout_log"),
     path('recommend/', login_required(views.recommend_workout), name="recommend_workout"),

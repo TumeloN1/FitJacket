@@ -25,6 +25,7 @@
                 </div>
             {% endfor %}
         </div>
+        <a href="{% url 'goals:create_goal'%}" class="btn btn-md btn-outline-primary">Create goal</a>
     {% else %}
         <div class="alert alert-info" role="alert">
             You haven't added any goals yet. Let's get started on your fitness journey!
