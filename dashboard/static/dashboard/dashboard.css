@@ -1,8 +1,0 @@
-a {
-    text-decoration: none; /* Removes the underline */
-    color: inherit; /* Ensures the link inherits the text color */
-}
-
-a:hover {
-    text-decoration: none; /* Ensures no underline on hover */
-}
