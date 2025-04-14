@@ -65,13 +65,18 @@
                 <ul class="list-group">
                     <div class="row">
                         {% for log in logs %}
-                        <div class="col-md-6 mb-4">
-                            <div class="card p-3 scale-hover">
-                                <h5 class="card-title">{{ log.exercise }}</h5>
-                                <p><strong>Date:</strong> {{ log.date }}</p>
-                                <p><strong>Duration:</strong> {{ log.duration }} minutes</p>
-                                <p><strong>Calories Burned:</strong> {{ log.calories_burned }} kcal</p>
-                                <p><strong>Notes:</strong> {{ log.notes|default:"No additional notes" }}</p>
+                        <div class="row-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <h5 class="card-title col-md-9"><strong>{{ log.exercise }}</strong></h5>
+                                        <p class="col-md-3 ms-auto justify-content-center text-end">{{ log.date }}</p>
+                                    </div>
+                                    <p class="card-text small">{{ log.duration }} minutes • {{log.sets}} x {{log.reps}}  •  {{log.weight}} lbs</p>
+                                    <p>Notes: {{ log.notes }}</p>
+                                    <a href="{% url 'workouts:edit_workout_log' log.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a href="{% url 'workouts:delete_workout_log' log.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </div>
                             </div>
                         </div>
                         {% empty %}
@@ -94,11 +99,15 @@
                         {% for goal in goals %}
                         <div class="row-md-6 mb-4">
                             <a href="{% url 'goals:goal_detail' goal.id %}" class="text-decoration-none">
-                                <div class="card p-3 scale-hover">
-                                    <h5  class="card-title">{{ goal.get_goal_type_display }}</h5>
-                                    <p><strong>Description:</strong> {{ goal.description }}</p>
-                                    <p><strong>Target:</strong> {{ goal.target_metric }}</p>
-                                    <p><strong>Target Date:</strong> {{ goal.target_date }}</p>
+                                <div class="card h-100 mb-4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <h5 class="card-title col-md-7"><strong>{{ goal.get_goal_type_display }}</strong></h5>
+                                            <p class="col-md-5 ms-auto justify-content-center text-end">Target: {{ goal.target_date|date:"F j, Y" }}</p>
+                                        </div>
+                                        <p class="card-text">Target: {{ goal.target_metric}}</p>
+                                        <p>Description: {{ goal.description }}</p>
+                                    </div>
                                 </div>
                             </a>
                         </div>

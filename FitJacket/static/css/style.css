@@ -75,7 +75,9 @@ h2, h4, h5 {
 .card {
     background-color: #12172f;
     border: 1px solid #1a2a6c;
+    box-shadow: 0 0 8px rgba(0,255,229,0.7);
     box-shadow: 0 0 15px rgba(0, 255, 229, 0.1);
+    
 }
 
 a {

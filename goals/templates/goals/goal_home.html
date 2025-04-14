@@ -10,16 +10,22 @@
         <div class="row">
             {% for goal in goals %}
                 <div class="col-md-6 mb-4">
-                    <div class="card shadow-sm h-100">
+                    <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">{{ goal.get_goal_type_display }}</h5>
-                            <p class="card-text">{{ goal.description }}</p>
-                            <p><strong>Target:</strong> {{ goal.target_metric }}</p>
-                            <p><strong>Target Date:</strong> {{ goal.target_date|date:"F j, Y" }}</p>
-                            <p class="text-muted small">Created on {{ goal.created_at|date:"F j, Y" }}</p>
-                            <a href="{% url 'goals:goal_detail' goal.id %}" class="btn btn-sm btn-outline-success">View Plan</a>
-                            <a href="{% url 'goals:update_goal' goal.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
-                            <a href="{% url 'goals:delete_goal' goal.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                            <div class="row">
+                                <h5 class="card-title col-md-7"><strong>{{ goal.get_goal_type_display }}</strong></h5>
+                                <p class="col-md-5 ms-auto justify-content-center text-end">Target: {{ goal.target_date|date:"F j, Y" }}</p>
+                            </div>
+                            <p class="card-text">Target: {{ goal.target_metric}}</p>
+                            <p>Description: {{ goal.description }}</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="{% url 'goals:goal_detail' goal.id %}" class="btn btn-sm btn-outline-success">View Plan</a>
+                                    <a href="{% url 'goals:update_goal' goal.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a href="{% url 'goals:delete_goal' goal.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </div>
+                                <p class="col-md-6 small ms-auto justify-content-center text-end">Created on {{ goal.created_at|date:"F j, Y" }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
