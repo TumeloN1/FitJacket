@@ -5,15 +5,21 @@
 {% block content %}
 <div class="container py-4">
     <h2 class="mb-4">Goal Details</h2>
-    <div class="card shadow-sm mb-4">
+    <div class="card h-100 mb-4">
         <div class="card-body">
-            <h5 class="card-title">{{ goal.get_goal_type_display }}</h5>
-            <p class="card-text">{{ goal.description }}</p>
-            <p><strong>Target:</strong> {{ goal.target_metric }}</p>
-            <p><strong>Target Date:</strong> {{ goal.target_date|date:"F j, Y" }}</p>
-            <p class="text-muted small">Created on {{ goal.created_at|date:"F j, Y" }}</p>
-            <a href="{% url 'goals:update_goal' goal.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
-            <a href="{% url 'goals:delete_goal' goal.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+            <div class="row">
+                <h5 class="card-title col-md-7"><strong>{{ goal.get_goal_type_display }}</strong></h5>
+                <p class="col-md-5 ms-auto justify-content-center text-end">Target: {{ goal.target_date|date:"F j, Y" }}</p>
+            </div>
+            <p class="card-text">Target: {{ goal.target_metric}}</p>
+            <p>Description: {{ goal.description }}</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{% url 'goals:update_goal' goal.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a href="{% url 'goals:delete_goal' goal.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div>
+                <p class="col-md-6 small ms-auto justify-content-center text-end">Created on {{ goal.created_at|date:"F j, Y" }}</p>
+            </div>
         </div>
     </div>
     <h3>Recommended Workout Plan</h3>
