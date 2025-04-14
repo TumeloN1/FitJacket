@@ -10,29 +10,17 @@
     <div class="row mt-5">
         <!-- Goals Section -->
         <div class="col-md-6 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header text-white">
-                    <h5 class="card-title mb-0">Your Goals</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        {% for goal in goals %}
-                        <a href="{% url 'goals:goal_detail' goal.id %}" class="text-decoration-none">
-                            <div class="col-md-6 mb-4">
-                                <div class="card p-3 scale-hover">
-                                    <h5>{{ goal.get_goal_type_display }}</h5>
-                                    <p><strong>Description:</strong> {{ goal.description }}</p>
-                                    <p><strong>Target:</strong> {{ goal.target_metric }}</p>
-                                    <p><strong>Target Date:</strong> {{ goal.target_date }}</p>
-                                </div>
-                            </div>
-                        </a>
-                        {% empty %}
-                        <p class="text-muted">No goals set yet. <a href="{% url 'goals:goal_home' %}">Set a goal</a>.</p>
-                        {% endfor %}
-                    </ul>
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-header text-white">
+                        <h5 class="card-title mb-0">Progress Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="progressChart" width="400" height="200"></canvas>
+                    </div>
                 </div>
             </div>
+            
         </div>
 
         <!-- Progress Section -->
@@ -59,14 +47,27 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        {% for log in workout_logs %}
-                        <li class="list-group-item">
-                            <strong>{{ log.date }}</strong>: {{ log.description }}
-                        </li>
+                        {% for log in logs %}
+                        <div class="row-md-6 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ log.exercise }}</h5>
+                                    <p class="card-text">
+                                        <strong>Date:</strong> {{ log.date }}<br>
+                                        <strong>Duration:</strong> {{ log.duration }} minutes<br>
+                                        <strong>Calories Burned:</strong> {{ log.calories_burned }} kcal<br>
+                                        <strong>Notes:</strong> {{ log.notes|default:"No additional notes" }}
+                                    </p>
+                                    <a href="{% url 'workouts:edit_workout_log' log.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a href="{% url 'workouts:delete_workout_log' log.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
                         {% empty %}
                         <p class="text-muted">No workout logs yet. <a href="{% url 'workouts:log_workout' %}">Log a workout</a>.</p>
                         {% endfor %}
                     </ul>
+                    <a href="{% url 'workouts:log_home'%}" class="btn btn-md btn-outline-primary">View all</a>
                 </div>
             </div>
         </div>
@@ -75,18 +76,26 @@
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
                 <div class="card-header text-white">
-                    <h5 class="card-title mb-0">Recommended Exercises</h5>
+                    <h5 class="card-title mb-0">Your Goals</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        {% for exercise in recommended_exercises %}
-                        <li class="list-group-item">
-                            <strong>{{ exercise.name }}</strong> - {{ exercise.description }}
-                        </li>
+                        {% for goal in goals %}
+                        <a href="{% url 'goals:goal_detail' goal.id %}" class="text-decoration-none">
+                            <div class="row-md-6 mb-4">
+                                <div class="card p-3 scale-hover">
+                                    <h5>{{ goal.get_goal_type_display }}</h5>
+                                    <p><strong>Description:</strong> {{ goal.description }}</p>
+                                    <p><strong>Target:</strong> {{ goal.target_metric }}</p>
+                                    <p><strong>Target Date:</strong> {{ goal.target_date }}</p>
+                                </div>
+                            </div>
+                        </a>
                         {% empty %}
-                        <p class="text-muted">No recommendations yet. <a href="{% url 'workouts:exercise_list' %}">Explore exercises</a>.</p>
+                        <p class="text-muted">No goals set yet. <a href="{% url 'goals:goal_home' %}">Set a goal</a>.</p>
                         {% endfor %}
                     </ul>
+                    <a href="{% url 'goals:goal_home'%}" class="btn btn-md btn-outline-primary">View all</a>
                 </div>
             </div>
         </div>
@@ -94,14 +103,20 @@
 
     <!-- Progress Charts Section -->
     <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="card shadow-sm">
-                <div class="card-header text-white">
-                    <h5 class="card-title mb-0">Progress Statistics</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="progressChart" width="400" height="200"></canvas>
-                </div>
+        <div class="card shadow-sm">
+            <div class="card-header text-white">
+                <h5 class="card-title mb-0">Recommended Plans</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for exercise in recommended_exercises %}
+                    <li class="list-group-item">
+                        <strong>{{ exercise.name }}</strong> - {{ exercise.description }}
+                    </li>
+                    {% empty %}
+                    <p class="text-muted">No recommendations yet. <a href="{% url 'workouts:exercise_list' %}">Explore exercises</a>.</p>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
