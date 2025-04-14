@@ -3,8 +3,87 @@
 {% block content %}
 
 <div class="container mt-4">
-    <h2 class="text-center">Welcome, User!</h2>
+    <h2 class="text-center">Welcome, {{ first_name }}!</h2>
     <hr/>
 
+    <!-- Dashboard Sections -->
+    <div class="row mt-5">
+        <!-- Goals Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header text-white">
+                    <h5 class="card-title mb-0">Your Goals</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for goal in goals %}
+                        <li class="list-group-item">
+                            <strong>{{ goal.title }}</strong> - {{ goal.description }}
+                        </li>
+                        {% empty %}
+                        <p class="text-muted">No goals set yet. <a href="{% url 'goals:goal_home' %}">Set a goal</a>.</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header text-white">
+                    <h5 class="card-title mb-0">Your Progress</h5>
+                </div>
+                <div class="card-body">
+                    <p>Workout Streak: <strong>{{ progress.streak }} days</strong></p>
+                    <p>Total Workouts Logged: <strong>{{ progress.total_workouts }}</strong></p>
+                    <p>Calories Burned: <strong>{{ progress.calories_burned }} kcal</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Workout Logs Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header text-dark">
+                    <h5 class="card-title mb-0">Workout Logs</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for log in workout_logs %}
+                        <li class="list-group-item">
+                            <strong>{{ log.date }}</strong>: {{ log.description }}
+                        </li>
+                        {% empty %}
+                        <p class="text-muted">No workout logs yet. <a href="{% url 'workouts:log_workout' %}">Log a workout</a>.</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommended Exercises Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header text-white">
+                    <h5 class="card-title mb-0">Recommended Exercises</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for exercise in recommended_exercises %}
+                        <li class="list-group-item">
+                            <strong>{{ exercise.name }}</strong> - {{ exercise.description }}
+                        </li>
+                        {% empty %}
+                        <p class="text-muted">No recommendations yet. <a href="{% url 'workouts:exercise_list' %}">Explore exercises</a>.</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
