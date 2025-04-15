@@ -41,7 +41,7 @@ def log_workout(request):
             log.user = request.user
             log.save()
             messages.success(request, "Workout log saved successfully!")
-            return redirect("workouts:view_plan")
+            return redirect("workouts:view_workout", log_id=log.id)
     else:
         form = WorkoutLogForm()
     return render(request, "workouts/log_workout.html", {"form": form})
@@ -74,17 +74,23 @@ def delete_workout_log(request, log_id):
 @login_required
 def view_workout(request, log_id):
     if log_id:
+        # Fetch the specific log by ID
         log = get_object_or_404(WorkoutLog, id=log_id, user=request.user)
+        
+        # Get all logs for the same exercise
+        logs = WorkoutLog.objects.filter(user=request.user, exercise=log.exercise).order_by('-date')
+        
+        # Prepare chart data for all logs of the same exercise
         chart_data = [
             [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
         ]
-        logs = [log]
     else:
+        # If no log_id is provided, fetch all logs for the user
         logs = WorkoutLog.objects.filter(user=request.user).order_by('date')
         chart_data = [
             [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
         ]
-        
+
     return render(request, "workouts/view_workout.html", {
         "logs" : logs,
         "chart_data" : chart_data,
