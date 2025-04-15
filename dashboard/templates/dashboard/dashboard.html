@@ -99,14 +99,19 @@
                         {% for goal in goals %}
                         <div class="row-md-6 mb-4">
                             <a href="{% url 'goals:goal_detail' goal.id %}" class="text-decoration-none">
-                                <div class="card h-100 mb-4">
+                                <div class="card h-100 mb-1">
                                     <div class="card-body">
                                         <div class="row">
-                                            <h5 class="card-title col-md-7"><strong>{{ goal.get_goal_type_display }}</strong></h5>
-                                            <p class="col-md-5 ms-auto justify-content-center text-end">Target: {{ goal.target_date|date:"F j, Y" }}</p>
+                                            <div class="col-md-2 d-flex justify-content-center align-items-center text-center">
+                                                <img src="{% static goal.get_image_path %}" alt="muscle" class="img-fluid m-3 align-center" width="90"/>
+                                            </div>
+                                            <div class="col-md-10 d-flex align-items-center">
+                                                <div>
+                                                    <p class="">Target: {{ goal.target_date|date:"F j, Y" }}</p>
+                                                    <h5 class="card-title"><strong>{{  goal.target_metric}}</strong></h5>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p class="card-text">Target: {{ goal.target_metric}}</p>
-                                        <p>Description: {{ goal.description }}</p>
                                     </div>
                                 </div>
                             </a>
