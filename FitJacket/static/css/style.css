@@ -130,3 +130,17 @@ a:hover {
         font-size: 1.5rem;
     }
 }
+
+.transparent-table {
+    background-color: transparent !important;
+}
+
+.transparent-table thead,
+.transparent-table tbody,
+.transparent-table tr,
+.transparent-table th,
+.transparent-table td {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: inherit; /* Optional: to retain text color */
+}
