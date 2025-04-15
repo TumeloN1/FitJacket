@@ -14,7 +14,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <h5 class="card-title col-md-9">
-                                    <a href="{% url 'workouts:view_workout' log.id %}">
+                                    <a href="{% url 'workouts:view_workout' log.exercise %}">
                                     <strong>{{ log.exercise }}</strong></h5>
                                     </a>
                                 <p class="col-md-3 ms-auto justify-content-center text-end">{{ log.date }}</p>

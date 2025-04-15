@@ -8,7 +8,8 @@ from .forms import WorkoutLogForm
 from .services.gpt_plan_generator import generate_plan
 from workouts.models import WorkoutPlan, SavedExercise
 from django.views.decorators.http import require_POST
-from django.utils.timezone import now
+import json
+from datetime import datetime, timedelta
 
 @login_required
 def view_workout_plan(request):
@@ -72,28 +73,21 @@ def delete_workout_log(request, log_id):
     return render(request, "workouts/confirm_delete.html", {"object": log})
 
 @login_required
-def view_workout(request, log_id):
-    if log_id:
-        # Fetch the specific log by ID
-        log = get_object_or_404(WorkoutLog, id=log_id, user=request.user)
-        
-        # Get all logs for the same exercise
-        logs = WorkoutLog.objects.filter(user=request.user, exercise=log.exercise).order_by('-date')
-        
-        # Prepare chart data for all logs of the same exercise
-        chart_data = [
-            [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
-        ]
-    else:
-        # If no log_id is provided, fetch all logs for the user
-        logs = WorkoutLog.objects.filter(user=request.user).order_by('date')
-        chart_data = [
-            [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
-        ]
+def view_workout(request, exercise):
+    # Get all logs for the same exercise
+    logs = WorkoutLog.objects.filter(user=request.user, exercise=exercise).order_by('date')
+    
+    # Prepare chart data for all logs of the same exercise
+    six_months_ago = datetime.now() - timedelta(days=6*30)  # Approximation of 6 months
+    logs = logs.filter(date__gte=six_months_ago)
+
+    chart_data = [
+        [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
+    ]
 
     return render(request, "workouts/view_workout.html", {
         "logs" : logs,
-        "chart_data" : chart_data,
+        "chart_data": json.dumps(chart_data),
         "first_name" : request.user.first_name,
     })
 
