@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% load static%}
+
+{% block head_scripts %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        const chartData = JSON.parse('{{ chart_data|safe }}');
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Date');
+        data.addColumn('number', 'Weight (lbs)');
+        data.addRows(chartData);
+
+        var options = {
+            title: "Max Weight Over Time",
+            legend: { position: 'bottom' },
+            hAxis: { title: "Date" },
+            vAxis: { title: "Weight (lbs)" },
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4 fade-in">
+    <h2 class="text-center">Welcome, {{ first_name }}!</h2>
+    <hr/>
+
+    <!-- Dashboard Sections -->
+    <div class="row mt-5">
+        <!-- Stats Section -->
+        <div class="col-md-6 mb-4">
+            <div class="col-md-12">
+                <div class="card-header text-white">
+                    <h5 class="card-title mb-4">Progress</h5>
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card-header text-white">
+                <h5 class="card-title mb-4">Most Recent Workout</h5>
+            </div>
+            <div class="row h-400">
+                <div class="col-md-4 mb-4">
+                    <div class="card p-3 text-center d-flex justify-content-center align-items-center">
+                        
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card p-3 text-center d-flex justify-content-center align-items-center">
+                        
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card p-3 text-center d-flex justify-content-center align-items-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Workout Logs Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card-header text-white">
+                <h5 class="card-title mb-4">Today's Workout Logs</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <div class="row">
+                        {% for log in logs %}
+                        <div class="row-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <h5 class="card-title col-md-9"><strong>{{ log.exercise }}</strong></h5>
+                                        <p class="col-md-3 ms-auto justify-content-center text-end">{{ log.date }}</p>
+                                    </div>
+                                    <p class="card-text small">{{ log.duration }} minutes • {{log.sets}} x {{log.reps}}  •  {{log.weight}} lbs</p>
+                                    <p>Notes: {{ log.notes }}</p>
+                                    <a href="{% url 'workouts:edit_workout_log' log.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a href="{% url 'workouts:delete_workout_log' log.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p>No workouts logged today yet.</p>
+                        {% endfor %}
+                    </div>
+                </ul>
+                <a href="{% url 'workouts:log_workout'%}" class="btn btn-md btn-outline-primary">Log a workout</a>
+            </div>
+        </div>
+
+        <!-- Goals Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card-header text-white">
+                <h5 class="card-title mb-4">Your Goals</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <div class="row">
+                        {% for goal in goals %}
+                        <div class="row-md-6 mb-4">
+                            <a href="{% url 'goals:goal_detail' goal.id %}" class="text-decoration-none">
+                                <div class="card h-100 mb-4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <h5 class="card-title col-md-7"><strong>{{ goal.get_goal_type_display }}</strong></h5>
+                                            <p class="col-md-5 ms-auto justify-content-center text-end">Target: {{ goal.target_date|date:"F j, Y" }}</p>
+                                        </div>
+                                        <p class="card-text">Target: {{ goal.target_metric}}</p>
+                                        <p>Description: {{ goal.description }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted">No goals set yet. <a href="{% url 'goals:goal_home' %}">Set a goal</a>.</p>
+                        {% endfor %}
+                    </div>
+                </ul>
+                <a href="{% url 'goals:goal_home'%}" class="btn btn-md btn-outline-primary">View all</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recomendations Section -->
+    <div>
+        <div class="card-header text-white">
+            <h5 class="card-title mb-4">Recommended Plans</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for exercise in recommended_exercises %}
+                <li class="list-group-item">
+                    <strong>{{ exercise.name }}</strong> - {{ exercise.description }}
+                </li>
+                {% empty %}
+                <p class="text-muted">No recommendations yet. <a href="{% url 'workouts:exercise_list' %}">Explore exercises</a>.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Example data for the chart
+    const chartID = document.getElementById('progressChart');
+    const chartData = chartID.getAttribute('chartData');
+    const labels = chartData.dates;
+    console.log(labels);
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Workout Duration',
+            data: chartData.duration,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    console.log(data);
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Your Progress Over Time'
+                }
+            }
+        }
+    };
+
+    const progressChart = new Chart(
+        document.getElementById('progressChart'),
+        config
+    );
+</script>
+{% endblock %}
+
+{% endblock %}

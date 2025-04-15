@@ -8,6 +8,7 @@ from .forms import WorkoutLogForm
 from .services.gpt_plan_generator import generate_plan
 from workouts.models import WorkoutPlan, SavedExercise
 from django.views.decorators.http import require_POST
+from django.utils.timezone import now
 
 @login_required
 def view_workout_plan(request):
@@ -69,6 +70,26 @@ def delete_workout_log(request, log_id):
         messages.success(request, "Workout log deleted successfully!")
         return redirect("workouts:view_plan")
     return render(request, "workouts/confirm_delete.html", {"object": log})
+
+@login_required
+def view_workout(request, log_id):
+    if log_id:
+        log = get_object_or_404(WorkoutLog, id=log_id, user=request.user)
+        chart_data = [
+            [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
+        ]
+        logs = [log]
+    else:
+        logs = WorkoutLog.objects.filter(user=request.user).order_by('date')
+        chart_data = [
+            [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
+        ]
+        
+    return render(request, "workouts/view_workout.html", {
+        "logs" : logs,
+        "chart_data" : chart_data,
+        "first_name" : request.user.first_name,
+    })
 
 @login_required
 def recommend_workout(request):
