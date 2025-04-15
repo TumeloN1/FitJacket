@@ -35,7 +35,7 @@
 
     <!-- Dashboard Sections -->
     <div class="row mt-5">
-        <!-- Stats Section -->
+        <!-- Chart Section -->
         <div class="col-md-6 mb-4">
             <div class="col-md-12">
                 <div class="card-header text-white">
@@ -49,26 +49,33 @@
             </div>
         </div>
 
-        <!-- Progress Section -->
+        <!-- Logs Section -->
         <div class="col-md-6 mb-4">
             <div class="card-header text-white">
-                <h5 class="card-title mb-4">Most Recent Workout</h5>
+                <h5 class="card-title mb-4">Most Recent Workouts</h5>
             </div>
             <div class="row h-400">
                 <div class="col-md-4 mb-4">
-                    <div class="card p-3 text-center d-flex justify-content-center align-items-center">
-                        
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3 text-center d-flex justify-content-center align-items-center">
-                        
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3 text-center d-flex justify-content-center align-items-center">
-                        
-                    </div>
+                    <table class="table table-striped mt-4" style="width: 500px; height: 500px;">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Weight (lbs)</th>
+                                <th>Reps</th>
+                                <th>Sets</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in logs %}
+                            <tr>
+                                <td>{{ log.date }}</td>
+                                <td>{{ log.weight }}</td>
+                                <td>{{ log.reps }}</td>
+                                <td>{{ log.sets }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
