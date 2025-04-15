@@ -10,17 +10,16 @@
     <!-- Dashboard Sections -->
     <div class="row mt-5">
         <!-- Stats Section -->
-        <div class="col-md-6 mb-4">
-            <div class="col-md-12">
-                <div class="card-header text-white">
-                    <h5 class="card-title mb-4">Progress Statistics</h5>
-                </div>
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <canvas id="progressChart" chartData="{{chart_data}}" width="400" height="200"></canvas>
-                    </div>
+        <div class="col-md-6 h-100">
+            <div class="card-header text-white">
+                <h5 class="card-title mb-4">Progress Statistics</h5>
+            </div>
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <canvas id="progressChart" chartData="{{chart_data}}"></canvas>
                 </div>
             </div>
+            
             
         </div>
 
@@ -29,23 +28,23 @@
             <div class="card-header text-white">
                 <h5 class="card-title mb-4">Your Progress this week</h5>
             </div>
-            <div class="row h-400">
+            <div class="row h-100">
                 <div class="col-md-4 mb-4">
-                    <div class="card p-3 text-center d-flex justify-content-center align-items-center">
+                    <div class="card p-3 text-center d-flex justify-content-center align-items-center h-100">
                         <img src="{% static 'img/fire.png' %}" alt="flame" class="img-fluid m-3 align-center" width="90"/>
                         <p> <strong>Active days</strong></p>
-                        <p>{{ progress.streak }} days</p>
+                        <p>{{ active_days }} days</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="card p-3 text-center d-flex justify-content-center align-items-center">
+                    <div class="card p-3 text-center d-flex justify-content-center align-items-center h-100">
                         <img src="{% static 'img/fire.png' %}" alt="flame" class="img-fluid m-3 align-center" width="90"/>
                         <p><strong>Total workouts</strong></p>
                         <p>{{ progress.streak }} days</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="card p-3 text-center d-flex justify-content-center align-items-center">
+                    <div class="card p-3 text-center d-flex justify-content-center align-items-center h-100">
                         <img src="{% static 'img/fire.png' %}" alt="flame" class="img-fluid m-3 align-center" width="90"/>
                         <p><strong>Total Duration</strong></p>
                         <p>{{ progress.streak }} days</p>
@@ -55,7 +54,7 @@
         </div>
     </div>
 
-    <div class="row mt-4">
+    <div class="row mt-5">
         <!-- Workout Logs Section -->
         <div class="col-md-6 mb-4">
             <div class="card-header text-white">
@@ -99,14 +98,19 @@
                         {% for goal in goals %}
                         <div class="row-md-6 mb-4">
                             <a href="{% url 'goals:goal_detail' goal.id %}" class="text-decoration-none">
-                                <div class="card h-100 mb-4">
+                                <div class="card h-100 mb-1">
                                     <div class="card-body">
                                         <div class="row">
-                                            <h5 class="card-title col-md-7"><strong>{{ goal.get_goal_type_display }}</strong></h5>
-                                            <p class="col-md-5 ms-auto justify-content-center text-end">Target: {{ goal.target_date|date:"F j, Y" }}</p>
+                                            <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                                <img src="{% static goal.get_image_path %}" alt="muscle" class="img-fluid m-3 align-center" width="90"/>
+                                            </div>
+                                            <div class="col-md-10 d-flex align-items-center">
+                                                <div>
+                                                    <p class="">Target: {{ goal.target_date|date:"F j, Y" }}</p>
+                                                    <h5 class="card-title"><strong>{{  goal.target_metric}}</strong></h5>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <p class="card-text">Target: {{ goal.target_metric}}</p>
-                                        <p>Description: {{ goal.description }}</p>
                                     </div>
                                 </div>
                             </a>

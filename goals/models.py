@@ -11,6 +11,13 @@ class FitnessGoal(models.Model):
         ("general_health", "General Health"),
     ]
 
+    IMAGE_PATHS = [
+        ("lose_weight", "img/excercise.png"),
+        ("gain_muscle", "img/muscle.png"),
+        ("improve_endurance", "img/stopwatch.png"),
+        ("general_health", "img/cardiogram.png"),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     goal_type = models.CharField(max_length=50, choices=GOAL_TYPES)
     description = models.TextField()
@@ -20,3 +27,7 @@ class FitnessGoal(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.get_goal_type_display()}"
+
+    def get_image_path(self):
+        image_dict = dict(self.IMAGE_PATHS)
+        return image_dict.get(self.goal_type, "img/default.png")
