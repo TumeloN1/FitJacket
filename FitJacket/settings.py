@@ -75,7 +75,7 @@ AUTHENTICATION_BACKENDS = [
 MONGO_DB_NAME   = 'FitJacketDatabase'
 MONGO_ATLAS_URI = os.getenv(
     'MONGO_ATLAS_URI',
-    'mongodb+srv://fitjacketteam2:bmZQ1y5FerkHVHuw@fitjacket.hktnt3w.mongodb.net/FitJacketDatabase?retryWrites=true&w=majority&appName=FitJacket'
+    'mongodb+srv://fitjacketteam2:bmZQ1y5FerkHVHuw@fitjacket.hktnt3w.mongodb.net/FitJacketDatabase?retryWrites=true&w=majority&tls=true&appName=FitJacket'
 )
 
 
