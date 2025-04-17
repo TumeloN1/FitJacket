@@ -5,29 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="398d5cb0-178e-4640-9ec2-6c1b018ef0ce" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/FitJacket/static/img/equipment.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FitJacket/static/img/exercise.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FitJacket/static/img/target.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/add_exercises.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/bodypart_browse.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/cache_dump.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/equipment_browse.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/exercise_detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workouts/templates/workouts/targetMuscle_browse.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/FitJacket.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FitJacket.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FitJacket/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/FitJacket/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FitJacket/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FitJacket/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FitJacket/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/FitJacket/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/goals/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/goals/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/templates/goals/goal_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/goals/templates/goals/goal_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/goals/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/goals/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keys.env" beforeDir="false" afterPath="$PROJECT_DIR$/keys.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workouts/exercise_views/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/workouts/exercise_views/exercises.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/exercises_views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workouts/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/exercise_browse.html" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/templates/workouts/exercise_browse.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/services/gpt_plan_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/services/gpt_plan_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/services/recommendation_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/services/recommendation_engine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/confirm_delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/templates/workouts/confirm_delete.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/exercise_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/templates/workouts/exercise_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workouts/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/workouts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/targetMuscle_browse.html" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/templates/workouts/targetMuscle_browse.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workouts/templates/workouts/view_plan.html" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/templates/workouts/view_plan.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workouts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/workouts/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +52,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/TumeloN1/FitJacket.git&quot;,
+    &quot;url&quot;: &quot;https://github.com/TumeloN1/FitJacket/&quot;,
     &quot;accountId&quot;: &quot;48b99c52-a938-4fa4-94a5-fe61e7ff95bd&quot;
   }
 }</component>
@@ -121,8 +118,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
-        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.26053.29" />
+        <option value="bundled-python-sdk-b1dbf8ef85a6-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.26053.29" />
       </set>
     </attachedChunks>
   </component>
@@ -147,23 +144,39 @@
       <workItem from="1744345709960" duration="2140000" />
       <workItem from="1744348168388" duration="295000" />
       <workItem from="1744349876652" duration="17145000" />
+      <workItem from="1744822964006" duration="2104000" />
+      <workItem from="1744862271752" duration="7082000" />
+      <workItem from="1744910854977" duration="6851000" />
+      <workItem from="1744918447309" duration="1418000" />
+      <workItem from="1744920983302" duration="6317000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/workouts/models.py</url>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FitJacket/wsgi.py</url>
           <line>9</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/accounts/auth_backends.py</url>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
