@@ -13,6 +13,7 @@ urlpatterns = [
     path('log/delete/<int:log_id>/', login_required(views.delete_workout_log), name="delete_workout_log"),
     path('recommend/', login_required(views.recommend_workout), name="recommend_workout"),
     path('exercises/', login_required(views.exercise_list), name="exercise_list"),
+    path('workout/view/<str:exercise>/', views.view_workout, name='view_workout'),
 
     # Section browse pages
     path('exercises/bodypart-browse/', login_required(api.bodypart_browse_view), name="bodypart_browse"),
