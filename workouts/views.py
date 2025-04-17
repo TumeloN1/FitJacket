@@ -42,7 +42,7 @@ def log_workout(request):
             log.user = request.user
             log.save()
             messages.success(request, "Workout log saved successfully!")
-            return redirect("workouts:view_workout", log_id=log.id)
+            return redirect("workouts:view_workout", exercise=log.exercise)
     else:
         form = WorkoutLogForm()
     return render(request, "workouts/log_workout.html", {"form": form})
@@ -89,6 +89,7 @@ def view_workout(request, exercise):
         "logs" : logs,
         "chart_data": json.dumps(chart_data),
         "first_name" : request.user.first_name,
+        "exercise": exercise,
     })
 
 @login_required
