@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="home-container">
+<div class="home-container text-center">
     <h1>Welcome to FitJacket 🏋️</h1>
     <p>Your all-in-one fitness tracker and workout generator.</p>
 
-    <ul>
-        <li><a href="/workouts/exercises/">Browse Exercises</a></li>
-        <li><a href="/goals/">Set Your Goals</a></li>
-        <li><a href="/dashboard/">View Dashboard</a></li>
+    <ul class="no-bullets">
+        <li><a class= "nav-link" href ="/workouts/exercises/"><strong>Browse Exercises</strong></a></li>
+        <li><a class= "nav-link" href="/goals/"><strong>Set Your Goals</strong></a></li>
+        <li><a class= "nav-link" href="/dashboard/"><strong>View Dashboard</strong></a></li>
     </ul>
 </div>
 {% endblock %}
