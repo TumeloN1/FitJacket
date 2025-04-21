@@ -7,7 +7,7 @@
       <h4>{{ goal.get_goal_type_display }}</h4>
       <p><strong>Target:</strong> {{ goal.target_metric }} by {{ goal.target_date|date:"F j, Y" }}</p>
       <p><strong>Description:</strong> {{ goal.description }}</p>
-      <p class="text-muted">Created on {{ goal.created_at|date:"F j, Y" }}</p>
+      <p><strong>Created on:</strong> {{ goal.created_at|date:"F j, Y" }}</p>
     </div>
   </div>
 

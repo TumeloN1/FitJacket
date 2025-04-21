@@ -90,4 +90,4 @@ def generate_plan(user, goal=None, workout_type="gym"):
         return f"No plan returned (raw):\n{resp.text}"
 
     # append your library link and return
-    return content + f"\n\n—\nBrowse more exercises: {EXERCISE_LIBRARY}"
+    return content + f"\n\n—\nBrowse more exercises: [Exercise Library]({LIBRARY_URL})"
