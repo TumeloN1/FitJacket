@@ -1,0 +1,31 @@
+<!-- social/templates/social/group_feed.html -->
+
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>{{ group.name }} Group Feed</h2>
+<p>{{ group.description }}</p>
+
+<a href="{% url 'create_post' group.id %}" class="btn">Post in Group</a>
+
+<hr>
+
+{% for post in posts %}
+  <div class="post-card">
+    <strong>{{ post.author.username }}</strong>
+    <p>{{ post.content }}</p>
+    <small>{{ post.created_at|date:"M d, Y H:i" }}</small>
+
+    <form method="post" action="{% url 'like_post' post.id %}">
+      {% csrf_token %}
+      <button type="submit">
+        ❤️ {{ post.likes|length }} like{{ post.likes|length|pluralize }}
+      </button>
+    </form>
+  </div>
+  <hr>
+{% empty %}
+  <p>No posts in this group yet.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+<!-- social/templates/social/feed.html -->
+
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>{{ request.user.username }}'s Feed</h2>
+
+<!-- Create Post Button -->
+<a href="{% url 'create_post' %}" class="btn">Create Post</a>
+
+<hr>
+
+<!-- Show each post -->
+{% for post in posts %}
+  <div class="post-card">
+    <strong>{{ post.author.username }}</strong>
+    <p>{{ post.content }}</p>
+    <small>{{ post.created_at|date:"M d, Y H:i" }}</small>
+
+    <form method="post" action="{% url 'like_post' post.id %}">
+      {% csrf_token %}
+      <button type="submit">
+        ❤️ {{ post.likes|length }} like{{ post.likes|length|pluralize }}
+      </button>
+    </form>
+  </div>
+  <hr>
+{% empty %}
+  <p>No posts yet! Start by following some friends or making your own post.</p>
+{% endfor %}
+
+{% endblock %}
