@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'dashboard',
     'adminpanel',
     'home',
+    'social',
 ]
 
 MIDDLEWARE = [
