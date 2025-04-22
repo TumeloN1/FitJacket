@@ -9,6 +9,9 @@ class Post(Document):
     created_at = DateTimeField(default=datetime.utcnow)
     likes = ListField(ReferenceField(Account))  # List of users who liked the post (references Account model)
     group = ReferenceField('Group', null=True)  # Group reference, if post is related to a group
+    meta = {
+        'collection': 'posts'
+    }
 
 # Comment model (for commenting on posts)
 class Comment(Document):
@@ -24,3 +27,18 @@ class Group(Document):
     members = ListField(ReferenceField(Account))  # List of members in the group
     admins = ListField(ReferenceField(Account))   # List of group admins
     created_at = DateTimeField(default=datetime.utcnow)
+
+class Friendship(Document):
+    user = ReferenceField(Account, required=True, reverse_delete_rule=2)  # 2 means CASCADE delete
+    friend = ReferenceField(Account, required=True, reverse_delete_rule=2)
+    created_at = DateTimeField(default=datetime.utcnow)
+
+    meta = {
+        'collection': 'friendships',
+        'indexes': [
+            {'fields': ['user', 'friend'], 'unique': True}  # Ensure friendships are unique
+        ]
+    }
+
+    def __str__(self):
+        return f"{self.user.username} is friends with {self.friend.username}"

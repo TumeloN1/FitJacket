@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% block content %}
+<h2>Welcome, {{ user.first_name }}</h2>
+
+<!-- Friend Adding Section -->
+<div>
+    <h2>Add a Friend</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="friend_username" placeholder="Enter friend's username" required>
+        <button type="submit" name="add_friend" class="btn btn-primary">Add Friend</button>
+    </form>
+</div>
+
+<!-- Create Post -->
+<form method="post" action="{% url 'create_post' %}">
+    {% csrf_token %}
+    <textarea name="content" placeholder="What's on your mind?" required></textarea>
+    <button type="submit">Post</button>
+</form>
+
+<!-- Main Feed -->
+<h3>Your Feed</h3>
+{% for post in posts %}
+  <div>
+    <p><strong>{{ post.author.username }}</strong> said: {{ post.content }}</p>
+    <p>Likes: {{ post.likes|length }}</p>
+    <a href="{% url 'like_post' post.id %}">Like</a>
+
+    <!-- Comments -->
+    <div>
+      {% for comment in comments_by_post|get_item:post.id %}
+        <p><strong>{{ comment.author.username }}:</strong> {{ comment.content }}</p>
+      {% endfor %}
+    </div>
+
+    <!-- Comment Form -->
+    <form method="post" action="{% url 'add_comment' %}">
+        {% csrf_token %}
+        <input type="hidden" name="post_id" value="{{ post.id }}">
+        <input type="text" name="comment_content" placeholder="Add a comment">
+        <button type="submit">Comment</button>
+    </form>
+  </div>
+  <hr>
+{% endfor %}
+
+<!-- Groups -->
+<h3>Groups</h3>
+<ul>
+  {% for group in groups %}
+    <li><a href="{% url 'group_feed' group.id %}">{{ group.name }}</a> 
+    {% if user not in group.members %}
+      - <a href="{% url 'join_group' group.id %}">Join</a>
+    {% endif %}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -6,6 +6,16 @@
     <h2 class="text-center">Welcome, {{ first_name }}!</h2>
     <hr/>
 
+    <div class="row mt-5">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm p-4">
+                <h5 class="card-title mb-3">🌐 Social Hub</h5>
+                <p>Connect with friends, share your workouts, and join fitness groups.</p>
+                <a href="{% url 'social_hub' %}" class="btn btn-primary">Go to Social Hub</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Dashboard Sections -->
     <div class="row mt-5">
         <!-- Stats Section -->
@@ -145,58 +155,6 @@
     </div>
 
     <hr>
-
-    <!-- Social Feed Section -->
-    <div class="row mt-5">
-        <div class="col-md-12 mb-4">
-            <div class="card-header text-white">
-                <h5 class="card-title mb-4">Your Social Feed</h5>
-            </div>
-            <div class="card-body">
-                <!-- Post Creation Form -->
-                <form action="{% url 'create_post' %}" method="post">
-                    {% csrf_token %}
-                    <textarea name="content" class="form-control" placeholder="What's on your mind?" required></textarea>
-                    <button type="submit" class="btn btn-md btn-outline-primary mt-2">Post</button>
-                </form>
-
-                <hr>
-
-                <!-- Display Posts -->
-                {% for post in posts %}
-                    <div class="post mt-3">
-                        <h4>{{ post.author.username }} <small class="text-muted">Posted on {{ post.created_at }}</small></h4>
-                        <p>{{ post.content }}</p>
-                        
-                        <!-- Display Comments -->
-                        <div>
-                            <h6>Comments</h6>
-                            {% for post_id, comments in comments_by_post.items %}
-                                {% if post.id|stringformat:"s" == post_id %}
-                                    <ul class="list-group">
-                                        {% for comment in comments %}
-                                            <li class="list-group-item">
-                                                <strong>{{ comment.author.username }}:</strong> {{ comment.content }}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-
-                        <!-- Comment Form -->
-                        <form action="{% url 'user_feed' %}" method="post">
-                            {% csrf_token %}
-                            <textarea name="comment_content" class="form-control" placeholder="Add a comment"></textarea>
-                            <input type="hidden" name="post_id" value="{{ post.id }}">
-                            <button type="submit" class="btn btn-sm btn-outline-primary mt-2">Post Comment</button>
-                        </form>
-                    </div>
-                    <hr>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 
 </div>
 
