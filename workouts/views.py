@@ -11,9 +11,9 @@ from .forms import WorkoutLogForm
 from .services.gpt_plan_generator import generate_plan
 from workouts.models import WorkoutPlan, SavedExercise
 from django.views.decorators.http import require_POST
+import json
+from datetime import datetime, timedelta
 import markdown
-
-
 @login_required
 def view_workout_plan(request):
     existing = WorkoutPlan.objects.filter(user=request.user).last()
@@ -54,7 +54,7 @@ def log_workout(request):
             log.user = request.user
             log.save()
             messages.success(request, "Workout log saved successfully!")
-            return redirect("workouts:view_plan")
+            return redirect("workouts:view_workout", exercise=log.exercise)
     else:
         form = WorkoutLogForm()
     return render(request, "workouts/log_workout.html", {"form": form})
@@ -83,6 +83,21 @@ def delete_workout_log(request, log_id):
         messages.success(request, "Workout log deleted successfully!")
         return redirect("workouts:view_plan")
     return render(request, "workouts/confirm_delete.html", {"object": log})
+
+@login_required
+def view_workout(request, exercise):
+    logs = WorkoutLog.objects.filter(user=request.user, exercise=exercise).order_by('date')
+    six_months_ago = datetime.now() - timedelta(days=6*30)
+    logs = logs.filter(date__gte=six_months_ago)
+    chart_data = [
+        [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
+    ]
+    return render(request, "workouts/view_workout.html", {
+        "logs" : logs,
+        "chart_data": json.dumps(chart_data),
+        "first_name" : request.user.first_name,
+        "exercise": exercise,
+    })
 
 @login_required
 def recommend_workout(request):
@@ -124,7 +139,6 @@ def delete_saved_exercise(request, pk):
     se.delete()
     messages.success(request, "Exercise removed from your library.")
     return redirect("workouts:exercise_list")
-
 @login_required
 def plans_events(request):
     plans = WorkoutPlan.objects.filter(user=request.user)
