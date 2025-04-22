@@ -1,31 +1,59 @@
-<!-- social/templates/social/group_feed.html -->
-
+<!-- social/group_feed.html -->
 {% extends 'base.html' %}
+
 {% block content %}
+    <h1>Group Feed: {{ group.name }}</h1>
+    <p>{{ group.description }}</p>
 
-<h2>{{ group.name }} Group Feed</h2>
-<p>{{ group.description }}</p>
+    <!-- Join Group Button -->
+    {% if request.user not in group.members %}
+        <form action="{% url 'join_group' group.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Join Group</button>
+        </form>
+    {% else %}
+        <p>You are a member of this group.</p>
+    {% endif %}
 
-<a href="{% url 'create_post' group.id %}" class="btn">Post in Group</a>
+    <hr>
 
-<hr>
+    <div>
+        <h2>Posts in {{ group.name }}</h2>
+        {% for post in posts %}
+            <div class="post">
+                <h3>{{ post.author.username }}</h3>
+                <p>{{ post.content }}</p>
+                <small>Posted on {{ post.created_at }}</small>
+                <div>
+                    <p><strong>{{ post.likes|length }} Likes</strong></p>
+                    <form action="{% url 'like_post' post.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" {% if request.user in post.likes %} disabled {% endif %}>Like</button>
+                    </form>
+                </div>
 
-{% for post in posts %}
-  <div class="post-card">
-    <strong>{{ post.author.username }}</strong>
-    <p>{{ post.content }}</p>
-    <small>{{ post.created_at|date:"M d, Y H:i" }}</small>
+                <!-- Comments Section -->
+                <div>
+                    <h4>Comments</h4>
+                    {% for post_id, comments in comments_by_post.items %}
+                        {% if post.id|stringformat:"s" == post_id %}
+                            <ul>
+                                {% for comment in comments %}
+                                    <li><strong>{{ comment.author.username }}:</strong> {{ comment.content }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
 
-    <form method="post" action="{% url 'like_post' post.id %}">
-      {% csrf_token %}
-      <button type="submit">
-        ❤️ {{ post.likes|length }} like{{ post.likes|length|pluralize }}
-      </button>
-    </form>
-  </div>
-  <hr>
-{% empty %}
-  <p>No posts in this group yet.</p>
-{% endfor %}
-
+                    <form action="{% url 'group_feed' group.id %}" method="post">
+                        {% csrf_token %}
+                        <textarea name="comment_content" placeholder="Add a comment"></textarea>
+                        <input type="hidden" name="post_id" value="{{ post.id }}">
+                        <button type="submit" name="comment_submit">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
 {% endblock %}
