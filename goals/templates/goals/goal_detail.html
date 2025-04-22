@@ -1,31 +1,27 @@
 {% extends 'base.html' %}
-
-{% block title %}Goal Detail - FitJacket{% endblock %}
-
 {% block content %}
-<div class="container py-4">
-    <h2 class="mb-4">Goal Details</h2>
-    <div class="card h-100 mb-4">
-        <div class="card-body">
-            <div class="row">
-                <h5 class="card-title col-md-7"><strong>{{ goal.get_goal_type_display }}</strong></h5>
-                <p class="col-md-5 ms-auto justify-content-center text-end">Target: {{ goal.target_date|date:"F j, Y" }}</p>
-            </div>
-            <p class="card-text">Target: {{ goal.target_metric}}</p>
-            <p>Description: {{ goal.description }}</p>
-            <div class="row">
-                <div class="col-md-6">
-                    <a href="{% url 'goals:update_goal' goal.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <a href="{% url 'goals:delete_goal' goal.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                </div>
-                <p class="col-md-6 small ms-auto justify-content-center text-end">Created on {{ goal.created_at|date:"F j, Y" }}</p>
-            </div>
-        </div>
+<div class="container mt-5">
+  <h2>Goal Details</h2>
+  <div class="card mb-4">
+    <div class="card-body">
+      <h4>{{ goal.get_goal_type_display }}</h4>
+      <p><strong>Target:</strong> {{ goal.target_metric }} by {{ goal.target_date|date:"F j, Y" }}</p>
+      <p><strong>Description:</strong> {{ goal.description }}</p>
+      <p><strong>Created on:</strong> {{ goal.created_at|date:"F j, Y" }}</p>
     </div>
-    <h3>Recommended Workout Plan</h3>
-    <div class="card p-3">
-        <pre>{{ plan }}</pre>
+  </div>
+
+  <h3>Recommended Workout Plan</h3>
+  <div class="card mb-4">
+    <div class="card-body">
+      {% if plan_html %}
+        <div>{{ plan_html|safe }}</div>
+      {% else %}
+        <p class="text-muted">No plan could be generated.</p>
+      {% endif %}
     </div>
-    <a href="{% url 'goals:goal_home' %}" class="btn btn-primary mt-3">Back to Goals</a>
+  </div>
+
+  <a href="{% url 'goals:goal_home' %}" class="btn btn-secondary">Back to Goals</a>
 </div>
 {% endblock %}

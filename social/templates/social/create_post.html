@@ -1,0 +1,18 @@
+<!-- social/create_post.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Create a New Post</h1>
+
+    <form action="{% if group_id %} {% url 'create_post_group' group_id %} {% else %} {% url 'create_post' %} {% endif %}" method="post">
+        {% csrf_token %}
+        <textarea name="content" placeholder="What's on your mind?" required></textarea>
+        <button type="submit">Post</button>
+    </form>
+
+    {% if group_id %}
+        <p>You are creating a post for the group: {{ group.name }}</p>
+    {% else %}
+        <p>This post will be visible on your personal feed.</p>
+    {% endif %}
+{% endblock %}

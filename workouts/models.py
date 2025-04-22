@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 
@@ -26,9 +26,6 @@ class WorkoutLog(models.Model):
 
     def __str__(self):
         return f"{self.user.username} – {self.exercise} on {self.date}"
-
-from django.db import models
-from django.contrib.auth.models import User
 
 class SavedExercise(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

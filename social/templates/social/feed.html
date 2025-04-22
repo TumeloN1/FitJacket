@@ -1,0 +1,57 @@
+<!-- social/feed.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Your Feed</h1>
+
+    <div>
+        <h2>Create a new post</h2>
+        <form action="{% url 'create_post' %}" method="post">
+            {% csrf_token %}
+            <textarea name="content" placeholder="What's on your mind?" required></textarea>
+            <button type="submit">Post</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Your Posts</h2>
+        {% for post in posts %}
+            <div class="post">
+                <h3>{{ post.author.username }}</h3>
+                <p>{{ post.content }}</p>
+                <small>Posted on {{ post.created_at }}</small>
+                <div>
+                    <p><strong>{{ post.likes|length }} Likes</strong></p>
+                    <form action="{% url 'like_post' post.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" {% if request.user in post.likes %} disabled {% endif %}>Like</button>
+                    </form>
+                </div>
+
+                <!-- Comments Section -->
+                <div>
+                    <h4>Comments</h4>
+                    {% for post_id, comments in comments_by_post.items %}
+                        {% if post.id|stringformat:"s" == post_id %}
+                            <ul>
+                                {% for comment in comments %}
+                                    <li><strong>{{ comment.author.username }}:</strong> {{ comment.content }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+
+                    <form action="{% url 'user_feed' %}" method="post">
+                        {% csrf_token %}
+                        <textarea name="comment_content" placeholder="Add a comment"></textarea>
+                        <input type="hidden" name="post_id" value="{{ post.id }}">
+                        <button type="submit" name="comment_submit">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+{% endblock %}

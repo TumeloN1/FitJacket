@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from goals.models import FitnessGoal
 from workouts.models import WorkoutLog
+from social.models import Post, Comment  # Import your social models
 from django.utils.timezone import now, timedelta
 from django.db.models import Count
 
 @login_required
 def view_dashboard(request):
+    # Fetch fitness data
     first_name = request.user.username
     goals = FitnessGoal.objects.filter(user=request.user)
     logs = WorkoutLog.objects.filter(user=request.user).filter(date=now().date())
@@ -31,12 +33,22 @@ def view_dashboard(request):
                 if weights[i + 1] - weights[i] > largest_increase:
                     largest_increase = weights[i + 1] - weights[i]
 
+    # Fetch social feed data
+    posts = Post.objects.order_by('-created_at')
+    comments_by_post = {}
+    for comment in Comment.objects.order_by('created_at'):
+        post_key = str(comment.post.id)
+        if post_key not in comments_by_post:
+            comments_by_post[post_key] = []
+        comments_by_post[post_key].append(comment)
+
+    # Chart data for fitness data visualization
     chart_data = {
         'dates': [log.date.strftime('%Y-%m-%d') for log in WorkoutLog.objects.filter(user=request.user)],
         'duration': [log.duration for log in WorkoutLog.objects.filter(user=request.user)],
     }
-    print(chart_data)
-    return render(request, 'dashboard/dashboard.html' , {
+
+    return render(request, 'dashboard/dashboard.html', {
         'first_name': first_name,
         'goals': goals,
         'logs': logs,
@@ -44,6 +56,6 @@ def view_dashboard(request):
         'active_days': active_days,
         'total_workouts': total_workouts,
         'largest_increase': largest_increase,
+        'posts': posts,  # Pass posts to template
+        'comments_by_post': comments_by_post,  # Pass comments grouped by post to template
     })
-
-# Create your exercise_views here.

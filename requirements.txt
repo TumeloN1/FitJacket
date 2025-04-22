@@ -44,4 +44,3 @@ safetensors~=0.5.3
 huggingface-hub~=0.30.2
 nltk~=3.9.1
 pydantic~=2.11.3
-openai~=1.72.0
