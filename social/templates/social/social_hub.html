@@ -39,6 +39,10 @@
             <button type="submit" name="search_user" style="margin-top: 5px;">Search</button>
         </form>
 
+        {% if request_message %}
+            <p>{{ request_message }}</p>
+        {% endif %}
+        
         {% if search_results %}
             <ul style="list-style: none; padding: 0;">
                 {% for user in search_results %}

@@ -9,31 +9,39 @@ from bson import ObjectId
 @login_required
 def social_hub(request):
     if not request.user.is_authenticated:
-        return redirect('login')  # Or wherever you want to redirect non-logged-in users
+        return redirect('login')
+
     user_doc = Account.objects.get(username=request.user.username)
 
-    # Friend request handling
     search_results = []
     incoming_requests = FriendRequest.objects(receiver=user_doc, status='pending')
     outgoing_requests = FriendRequest.objects(sender=user_doc, status='pending')
+    request_message = ""  # message to show in template
 
     if request.method == 'POST':
         if 'search_user' in request.POST:
             query = request.POST['search_query']
-            # Get the list of friends and exclude them from the search results
             friendships = Friendship.objects(user=user_doc)
             friend_ids = [friendship.friend.id for friendship in friendships]
-            # Corrected query to exclude friends
             search_results = Account.objects(username__icontains=query).filter(id__nin=friend_ids)
 
         elif 'send_request' in request.POST:
             target_id = request.POST['target_id']
             try:
                 target_user = Account.objects.get(id=ObjectId(target_id))
-                if not FriendRequest.objects(sender=user_doc, receiver=target_user):
+                existing_request = FriendRequest.objects(
+                    (Q(sender=user_doc) & Q(receiver=target_user)) |
+                    (Q(sender=target_user) & Q(receiver=user_doc))
+                ).first()
+
+                if not existing_request:
                     FriendRequest(sender=user_doc, receiver=target_user).save()
+                    request_message = f"Friend request sent to {target_user.username}."
+                else:
+                    request_message = f"You have already sent a friend request to {target_user.username}."
             except Exception as e:
                 print("Send request error:", e)
+                request_message = "Something went wrong sending the friend request."
 
         elif 'accept_request' in request.POST:
             req_id = request.POST['request_id']
@@ -57,32 +65,16 @@ def social_hub(request):
 
     friendships = Friendship.objects(user=user_doc)
     friend_ids = [friendship.friend.id for friendship in friendships]
-    friends = Account.objects(id__in=friend_ids)  # Get the list of friend accounts
-    
+    friends = Account.objects(id__in=friend_ids)
+
     posts = Post.objects(author__in=[user_doc] + [friendship.friend for friendship in friendships]).order_by('-created_at')
     groups = Group.objects(members=user_doc)
 
-    # Fetch comments for posts
     comments_by_post = {}
     for post in posts:
         comments = Comment.objects(post=post)
-        comments_by_post[str(post.id)] = comments  # Convert the post ID to a string to handle it properly in the template
+        comments_by_post[str(post.id)] = comments
 
-    # Handle adding friends (via POST request)
-    if request.method == 'POST' and 'add_friend' in request.POST:
-        friend_username = request.POST['friend_username']
-        try:
-            # Fetch the Account by the username
-            friend_user = Account.objects.get(username=friend_username)
-            
-            # Make sure the logged-in user is not trying to add themselves
-            if friend_user != user_doc:
-                if not Friendship.objects(user=user_doc, friend=friend_user):
-                    Friendship(user=user_doc, friend=friend_user).save()
-        except Account.DoesNotExist:
-            # Handle the case when the user doesn't exist
-            pass
-    
     return render(request, 'social/social_hub.html', {
         'search_results': search_results,
         'incoming_requests': incoming_requests,
@@ -90,7 +82,8 @@ def social_hub(request):
         'posts': posts,
         'comments_by_post': comments_by_post,
         'groups': groups,
-        'friends': friends,  # Add this to pass friends to the template
+        'friends': friends,
+        'request_message': request_message,
     })
 
 
