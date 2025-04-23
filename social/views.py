@@ -20,7 +20,11 @@ def social_hub(request):
     if request.method == 'POST':
         if 'search_user' in request.POST:
             query = request.POST['search_query']
-            search_results = Account.objects(username__icontains=query, id__ne=user_doc.id)
+            # Get the list of friends and exclude them from the search results
+            friendships = Friendship.objects(user=user_doc)
+            friend_ids = [friendship.friend.id for friendship in friendships]
+            # Corrected query to exclude friends
+            search_results = Account.objects(username__icontains=query).filter(id__nin=friend_ids)
 
         elif 'send_request' in request.POST:
             target_id = request.POST['target_id']
@@ -51,7 +55,6 @@ def social_hub(request):
             except Exception as e:
                 print("Reject request error:", e)
 
-    user_doc = Account.objects.get(username=request.user.username)
     friendships = Friendship.objects(user=user_doc)
     friend_ids = [friendship.friend.id for friendship in friendships]
     friends = Account.objects(id__in=friend_ids)  # Get the list of friend accounts
