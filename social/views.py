@@ -1,18 +1,61 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from accounts.documents import Account
-from .models import Post, Comment, Group, Friendship
+from .documents import Post, Comment, Group, Friendship, FriendRequest
 from mongoengine.queryset.visitor import Q
+from bson import ObjectId
+
 
 @login_required
 def social_hub(request):
     if not request.user.is_authenticated:
         return redirect('login')  # Or wherever you want to redirect non-logged-in users
+    user_doc = Account.objects.get(username=request.user.username)
+
+    # Friend request handling
+    search_results = []
+    incoming_requests = FriendRequest.objects(receiver=user_doc, status='pending')
+    outgoing_requests = FriendRequest.objects(sender=user_doc, status='pending')
+
+    if request.method == 'POST':
+        if 'search_user' in request.POST:
+            query = request.POST['search_query']
+            search_results = Account.objects(username__icontains=query, id__ne=user_doc.id)
+
+        elif 'send_request' in request.POST:
+            target_id = request.POST['target_id']
+            try:
+                target_user = Account.objects.get(id=ObjectId(target_id))
+                if not FriendRequest.objects(sender=user_doc, receiver=target_user):
+                    FriendRequest(sender=user_doc, receiver=target_user).save()
+            except Exception as e:
+                print("Send request error:", e)
+
+        elif 'accept_request' in request.POST:
+            req_id = request.POST['request_id']
+            try:
+                fr = FriendRequest.objects.get(id=ObjectId(req_id), receiver=user_doc)
+                fr.status = 'accepted'
+                fr.save()
+                Friendship(user=user_doc, friend=fr.sender).save()
+                Friendship(user=fr.sender, friend=user_doc).save()
+            except Exception as e:
+                print("Accept request error:", e)
+
+        elif 'reject_request' in request.POST:
+            req_id = request.POST['request_id']
+            try:
+                fr = FriendRequest.objects.get(id=ObjectId(req_id), receiver=user_doc)
+                fr.status = 'rejected'
+                fr.save()
+            except Exception as e:
+                print("Reject request error:", e)
 
     user_doc = Account.objects.get(username=request.user.username)
     friendships = Friendship.objects(user=user_doc)
     friend_ids = [friendship.friend.id for friendship in friendships]
-  
+    friends = Account.objects(id__in=friend_ids)  # Get the list of friend accounts
+    
     posts = Post.objects(author__in=[user_doc] + [friendship.friend for friendship in friendships]).order_by('-created_at')
     groups = Group.objects(members=user_doc)
 
@@ -20,7 +63,7 @@ def social_hub(request):
     comments_by_post = {}
     for post in posts:
         comments = Comment.objects(post=post)
-        comments_by_post[post.id] = comments
+        comments_by_post[str(post.id)] = comments  # Convert the post ID to a string to handle it properly in the template
 
     # Handle adding friends (via POST request)
     if request.method == 'POST' and 'add_friend' in request.POST:
@@ -38,10 +81,16 @@ def social_hub(request):
             pass
     
     return render(request, 'social/social_hub.html', {
+        'search_results': search_results,
+        'incoming_requests': incoming_requests,
+        'outgoing_requests': outgoing_requests,
         'posts': posts,
         'comments_by_post': comments_by_post,
         'groups': groups,
+        'friends': friends,  # Add this to pass friends to the template
     })
+
+
 
 @login_required
 def add_friend(request, friend_id):

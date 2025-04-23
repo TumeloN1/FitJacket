@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from goals.models import FitnessGoal
 from workouts.models import WorkoutLog
-from social.models import Post, Comment  # Import your social models
+from social.documents import Post, Comment  # Import your social models
 from django.utils.timezone import now, timedelta
 from django.db.models import Count
 
