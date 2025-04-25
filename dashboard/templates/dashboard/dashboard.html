@@ -1,5 +1,33 @@
 {% extends "base.html" %}
-{% load static%}
+{% load static %}
+
+{% block head_scripts %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        console.log("Chart script loaded");
+    
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            const chartData = JSON.parse('{{ chart_data|safe }}');
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'X');
+            data.addColumn('number', 'Weight (lbs)');
+            data.addRows(chartData);
+
+            var options = {
+                title: "Max Weight in the Past Six Months",
+                legend: { position: 'bottom' },
+                hAxis: { title: "Date" },
+                vAxis: { title: "Weight (lbs)" },
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+            chart.draw(data, options);
+        }
+    </script>
+{% endblock %}
 
 {% block content %}
 
@@ -16,7 +44,7 @@
             </div>
             <div class="card shadow-sm h-100">
                 <div class="card-body">
-                    <canvas id="progressChart" chartData="{{chart_data}}"></canvas>
+                    <canvas id="line_chart" chartData="{{ chart_data }}"></canvas>
                 </div>
             </div>
             
@@ -63,7 +91,7 @@
             <div class="card-body">
                 <ul class="list-group">
                     <div class="row">
-                        {% for log in logs %}
+                        {% for log in logs_today %}
                         <div class="row-md-6 mb-4">
                             <div class="card h-100">
                                 <div class="card-body ">
@@ -143,52 +171,5 @@
         </div>
     </div>
 </div>
-
-
-
-{% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    // Example data for the chart
-    const chartID = document.getElementById('progressChart');
-    const chartData = chartID.getAttribute('chartData');
-    const labels = chartData.dates;
-    console.log(labels);
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Workout Duration',
-            data: chartData.duration,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }]
-    };
-
-    console.log(data);
-
-    const config = {
-        type: 'line',
-        data: data,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Your Progress Over Time'
-                }
-            }
-        }
-    };
-
-    const progressChart = new Chart(
-        document.getElementById('progressChart'),
-        config
-    );
-</script>
-{% endblock %}
 
 {% endblock %}
