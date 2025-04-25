@@ -23,7 +23,11 @@ def social_hub(request):
             query = request.POST['search_query']
             friendships = Friendship.objects(user=user_doc)
             friend_ids = [friendship.friend.id for friendship in friendships]
-            search_results = Account.objects(username__icontains=query).filter(id__nin=friend_ids)
+
+            # Search users by username, exclude friends AND yourself
+            search_results = Account.objects(username__icontains=query).filter(
+                id__nin=friend_ids + [user_doc.id]
+            )
 
         elif 'send_request' in request.POST:
             target_id = request.POST['target_id']
@@ -69,6 +73,50 @@ def social_hub(request):
 
     posts = Post.objects(author__in=[user_doc] + [friendship.friend for friendship in friendships]).order_by('-created_at')
     groups = Group.objects(members=user_doc)
+    group_search_results = []
+    group_message = ""
+
+    if request.method == 'POST':
+        if 'search_group' in request.POST:
+            group_query = request.POST['group_query']
+            group_search_results = Group.objects(title__icontains=group_query).filter(members__ne=user_doc)
+
+        elif 'join_group' in request.POST:
+            group_id = request.POST['group_id']
+            group = Group.objects(id=ObjectId(group_id)).first()
+            if group and user_doc not in group.members:
+                group.members.append(user_doc)
+                group.save()
+                group_message = f"You joined the group: {group.title}"
+            else:
+                group_message = "You are already in this group."
+
+        elif 'create_group' in request.POST:
+            group_title = request.POST['group_title']
+            if not Group.objects(title=group_title).first():  # Prevent duplicate names
+                group = Group(title=group_title, members=[user_doc])
+                group.save()
+                group_message = f"Group '{group_title}' created and joined!"
+            else:
+                group_message = "A group with this name already exists."
+        elif 'leave_group' in request.POST:
+            group_id = request.POST['group_id']
+            group = Group.objects(id=ObjectId(group_id)).first()
+            if group and user_doc in group.members:
+                if group.creator != user_doc:
+                    group.members.remove(user_doc)
+                    group.save()
+                    group_message = f"You left the group: {group.title}"
+                else:
+                    group_message = "You cannot leave a group you created. You can delete it instead."
+
+        elif 'delete_group' in request.POST:
+            group_id = request.POST['group_id']
+            group = Group.objects(id=ObjectId(group_id)).first()
+            if group and group.creator == user_doc:
+                group.delete()
+                group_message = f"The group '{group.title}' has been deleted."
+
 
     comments_by_post = {}
     for post in posts:
@@ -84,6 +132,8 @@ def social_hub(request):
         'groups': groups,
         'friends': friends,
         'request_message': request_message,
+        'group_search_results': group_search_results,
+        'group_message': group_message,
     })
 
 

@@ -22,11 +22,10 @@ class Comment(Document):
 
 # Group model (for creating and managing groups)
 class Group(Document):
-    name = StringField(required=True, unique=True)
-    description = StringField()
+    title = StringField(required=True, unique=True)
     members = ListField(ReferenceField(Account))  # List of members in the group
-    admins = ListField(ReferenceField(Account))   # List of group admins
-    created_at = DateTimeField(default=datetime.utcnow)
+    creator = ListField(ReferenceField(Account))   # List of group admins
+    
 
 class Friendship(Document):
     user = ReferenceField(Account, required=True, reverse_delete_rule=2)  # 2 means CASCADE delete
