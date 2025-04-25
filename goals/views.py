@@ -1,8 +1,10 @@
+import markdown
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import FitnessGoal
 from .forms import FitnessGoalForm
 from workouts.services.gpt_plan_generator import generate_plan
+
 
 @login_required
 def create_goal(request):
@@ -30,10 +32,15 @@ def goal_home(request):
 
 @login_required
 def goal_detail(request, goal_id):
-    goal = get_object_or_404(FitnessGoal, pk=goal_id, user=request.user)
-    # Generate the workout plan using GPT based on the user's most recent goal
-    plan = generate_plan(request.user)
-    return render(request, "goals/goal_detail.html", {"goal": goal, "plan": plan})
+    goal = get_object_or_404(FitnessGoal, id=goal_id, user=request.user)
+    raw_plan = generate_plan(request.user, goal=goal)
+
+    plan_html = markdown.markdown(raw_plan)
+    return render(request, "goals/goal_detail.html", {
+        "goal": goal,
+        "plan_html": plan_html,
+    })
+
 
 @login_required
 def update_goal(request, goal_id):
@@ -54,3 +61,4 @@ def delete_goal(request, goal_id):
         goal.delete()
         return redirect("goals:view_goals")
     return render(request, "goals/confirm_delete_goal.html", {"goal": goal})
+

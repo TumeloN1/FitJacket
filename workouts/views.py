@@ -1,4 +1,7 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from goals.forms import GoalSelectionForm
 from .models import WorkoutLog
 from .services.recommendation_engine import generate_recommendation
 from django.shortcuts import render, redirect
@@ -8,23 +11,34 @@ from .forms import WorkoutLogForm
 from .services.gpt_plan_generator import generate_plan
 from workouts.models import WorkoutPlan, SavedExercise
 from django.views.decorators.http import require_POST
-
+import json
+from datetime import datetime, timedelta
+import markdown
 @login_required
 def view_workout_plan(request):
-    plan = WorkoutPlan.objects.filter(user=request.user).last()
+    existing = WorkoutPlan.objects.filter(user=request.user).last()
+    form = GoalSelectionForm(request.user, request.POST or None)
 
-    if not plan:
-        content = generate_plan(request.user)
-        plan = WorkoutPlan.objects.create(
+    if request.method == "POST" and form.is_valid():
+        goal = form.cleaned_data['goal']
+        workout_type = request.POST.get("workout_type", "gym")
+        content = generate_plan(request.user, goal=goal, workout_type=workout_type)
+
+        existing = WorkoutPlan.objects.create(
             user=request.user,
-            name="Auto-Generated Plan",
-            goal="Auto from Goal model",
-            content=content
+            name=f"Plan: {goal.get_goal_type_display()}",
+            goal=goal.description,
+            content=content,
         )
-        messages.success(request, "Your workout plan has been generated!")
+        messages.success(request, "Your workout plan has been generated")
+    if existing:
+        plan_html = markdown.markdown(existing.content)
 
-    return render(request, "workouts/view_plan.html", {"plan": plan})
-
+    return render(request, "workouts/view_plan.html", {
+        "form": form,
+        "plan": existing,
+        "plan_html": plan_html if existing else None,
+    })
 
 @login_required
 def view_logs(request):
@@ -40,7 +54,7 @@ def log_workout(request):
             log.user = request.user
             log.save()
             messages.success(request, "Workout log saved successfully!")
-            return redirect("workouts:view_plan")
+            return redirect("workouts:view_workout", exercise=log.exercise)
     else:
         form = WorkoutLogForm()
     return render(request, "workouts/log_workout.html", {"form": form})
@@ -69,6 +83,21 @@ def delete_workout_log(request, log_id):
         messages.success(request, "Workout log deleted successfully!")
         return redirect("workouts:view_plan")
     return render(request, "workouts/confirm_delete.html", {"object": log})
+
+@login_required
+def view_workout(request, exercise):
+    logs = WorkoutLog.objects.filter(user=request.user, exercise=exercise).order_by('date')
+    six_months_ago = datetime.now() - timedelta(days=6*30)
+    logs = logs.filter(date__gte=six_months_ago)
+    chart_data = [
+        [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
+    ]
+    return render(request, "workouts/view_workout.html", {
+        "logs" : logs,
+        "chart_data": json.dumps(chart_data),
+        "first_name" : request.user.first_name,
+        "exercise": exercise,
+    })
 
 @login_required
 def recommend_workout(request):
@@ -110,3 +139,14 @@ def delete_saved_exercise(request, pk):
     se.delete()
     messages.success(request, "Exercise removed from your library.")
     return redirect("workouts:exercise_list")
+@login_required
+def plans_events(request):
+    plans = WorkoutPlan.objects.filter(user=request.user)
+    events = []
+    for p in plans:
+        events.append({
+            "title": p.name,
+            "start": p.created_at.date().isoformat(),
+            "url": reverse("workouts:view_plan") + f"?plan_id={p.id}"
+        })
+    return JsonResponse(events, safe=False)

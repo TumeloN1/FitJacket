@@ -15,11 +15,10 @@
 </div>
 
 <script>
-  // Load the list of targets
   const targetUrl = "{% url 'workouts:api_target_list' %}";
   function loadTargetList() {
     const sel = document.getElementById('targetSelect');
-    if (sel.options.length > 1) return; // already loaded
+    if (sel.options.length > 1) return;
     fetch(targetUrl)
       .then(r => r.json())
       .then(list => {

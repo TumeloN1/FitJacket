@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<h1>Social Hub</h1>
+
+<!-- Flex container for left and right panels -->
+<div style="display: flex; gap: 20px; align-items: flex-start;">
+
+    <!-- Left panel: Requests, Search, Friends -->
+    <div style="width: 25%; min-width: 200px;">
+        <!-- Friend Requests -->
+        <h2>Friend Requests</h2>
+        <div style="margin-bottom: 20px;">
+            {% for request in incoming_requests %}
+                <div style="background: #f1f1f1; border-radius: 6px; padding: 8px; margin-bottom: 10px; display: flex; flex-direction: column; justify-content: space-between; height: 100px;">
+                    <!-- Username + Text Combined in one line -->
+                    <p style="margin: 0; text-align: center; display: inline-block; color: #444445;">
+                        <strong>{{ request.sender.username }}</strong> sent you a friend request.
+                    </p>
+                    
+                    <!-- Buttons at the bottom, centered -->
+                    <form method="POST" style="display: flex; gap: 5px; justify-content: center; margin-top: auto;">
+                        {% csrf_token %}
+                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                        <button type="submit" name="accept_request">Accept</button>
+                        <button type="submit" name="reject_request">Reject</button>
+                    </form>
+                </div>
+            {% empty %}
+                <p>No incoming requests.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Search for users -->
+        <h2>Add Friends</h2>
+        <form method="POST" style="margin-bottom: 15px;">
+            {% csrf_token %}
+            <input type="text" name="search_query" placeholder="Search for users" style="width: 100%;">
+            <button type="submit" name="search_user" style="margin-top: 5px;">Search</button>
+        </form>
+
+        {% if request_message %}
+            <p>{{ request_message }}</p>
+        {% endif %}
+        
+        {% if search_results %}
+            <ul style="list-style: none; padding: 0;">
+                {% for user in search_results %}
+                    <li style="background: #ffffff; margin-bottom: 8px; padding: 6px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+                        <!-- Username with custom color -->
+                        <span style="color: #444445;">{{ user.username }}</span>
+                        
+                        <!-- Add button aligned to the right -->
+                        <form method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="target_id" value="{{ user.id }}">
+                            <button type="submit" name="send_request">Add</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        <!-- Friend List -->
+        <h2>Your Friends</h2>
+        <div style="
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #fbfbfb;
+            margin-bottom: 20px; /* Add space below the friends list */
+        ">
+            {% if friends %}
+                <ul style="list-style: none; padding-left: 0; margin: 0;">
+                    {% for friend in friends %}
+                        <li style="padding: 8px; border-bottom: 1px solid #e0e0e0;">
+                            <strong style="color: #444445;">{{ friend.username }}</strong>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>You have no friends yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Divider -->
+        <hr style="border-top: 2px solid #ccc; margin: 20px 0;">
+
+        <!-- GROUPS SECTION -->
+        <h2>Join Groups</h2>
+
+        <!-- Search Groups -->
+        <form method="POST" style="margin-bottom: 10px;">
+            {% csrf_token %}
+            <input type="text" name="group_query" placeholder="Search for groups" style="width: 100%;">
+            <button type="submit" name="search_group" style="margin-top: 5px;">Search</button>
+        </form>
+
+        {% if group_message %}
+            <p>{{ group_message }}</p>
+        {% endif %}
+
+        {% if group_search_results %}
+            <ul style="list-style: none; padding: 0;">
+                {% for group in group_search_results %}
+                    <li style="background: #ffffff; margin-bottom: 8px; padding: 6px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #444445;">{{ group.title }}</span>
+                        <form method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="group_id" value="{{ group.id }}">
+                            <button type="submit" name="join_group">Join</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!-- Create a New Group -->
+        <h3 style="color: #00ffe5;">Create a Group</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="group_title" placeholder="Group name" style="width: 100%;">
+            <button type="submit" name="create_group" style="margin-top: 5px;">Create</button>
+        </form>
+
+        <!-- List Your Groups -->
+        <h3 style="color: #00ffe5;">Your Groups</h3>
+        <div style="
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #fbfbfb;
+        ">
+            {% if groups %}
+                <ul style="list-style: none; padding-left: 0; margin: 0;">
+                    {% for group in groups %}
+                        <li style="padding: 8px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
+                            <strong style="color: #444445;">{{ group.title }}</strong>
+
+                            <form method="POST" style="margin: 0;">
+                                {% csrf_token %}
+                                <input type="hidden" name="group_id" value="{{ group.id }}">
+                                {% if group.creator.id == user.id %}
+                                    <button type="submit" name="delete_group" style="color: red;">Delete</button>
+                                {% else %}
+                                    <button type="submit" name="leave_group" style="color: gray;">Leave</button>
+                                {% endif %}
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>You are not in any groups yet.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Right panel: Posts & Comments -->
+    <div style="flex-grow: 1;">
+        {% for post in posts %}
+            <div class="post" style="border-bottom: 1px solid #ccc; padding: 10px 0;">
+                <h3>{{ post.author.username }}: {{ post.content }}</h3>
+                <p><small>Posted on: {{ post.created_at }}</small></p>
+                
+                <div class="comments" style="margin-left: 20px;">
+                    {% for comment in comments_by_post|get_item:post.id %}
+                        <div><strong>{{ comment.author.username }}</strong>: {{ comment.content }}</div>
+                    {% empty %}
+                        <p>No comments yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div> <!-- end flex container -->
+
+{% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from goals.models import FitnessGoal
 from workouts.models import WorkoutLog
+from social.documents import Post, Comment  # Import your social models
 from django.utils.timezone import now, timedelta
 import json
 from datetime import datetime
@@ -9,6 +10,7 @@ from django.db.models import Count
 
 @login_required
 def view_dashboard(request):
+    # Fetch fitness data
     first_name = request.user.username
     goals = FitnessGoal.objects.filter(user=request.user)
     logs = WorkoutLog.objects.filter(user=request.user)
@@ -70,5 +72,3 @@ def view_dashboard(request):
         'comments_by_post': comments_by_post,  # Pass comments grouped by post to template
         'minutes_today': minutes_today,
     })
-
-# Create your exercise_views here.

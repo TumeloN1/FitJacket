@@ -13,7 +13,10 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="row">
-                                <h5 class="card-title col-md-9"><strong>{{ log.exercise }}</strong></h5>
+                                <h5 class="card-title col-md-9">
+                                    <a href="{% url 'workouts:view_workout' log.exercise %}">
+                                    <strong>{{ log.exercise }}</strong></h5>
+                                    </a>
                                 <p class="col-md-3 ms-auto justify-content-center text-end">{{ log.date }}</p>
                             </div>
                             <p class="card-text small">{{ log.duration }} minutes • {{log.sets}} x {{log.reps}}  •  {{log.weight}} lbs</p>
