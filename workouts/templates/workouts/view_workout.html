@@ -9,23 +9,54 @@
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
+        let chart;  // Declare the chart variable globally
+        let data;   // Declare the data variable globally
+        let options;
+
         function drawChart() {
             const chartData = JSON.parse('{{ chart_data|safe }}');
 
-            var data = new google.visualization.DataTable();
+            data = new google.visualization.DataTable();
             data.addColumn('string', 'X');
             data.addColumn('number', 'Weight (lbs)');
             data.addRows(chartData);
 
-            var options = {
+            options = {
                 title: "Max Weight in the Past Six Months",
-                legend: { position: 'bottom' },
-                hAxis: { title: "Date" },
-                vAxis: { title: "Weight (lbs)" },
+                titleTextStyle: {
+                    color: '#FFF',
+                    fontSize: 18,
+                },
+                animation:{
+                    duration: 1000,
+                    easing: 'out',
+                    "startup": true
+                },
+                legend: { position: 'bottom', textStyle: { color: '#FFF' }, },
+                hAxis: { 
+                    title: "Date",
+                    titleTextStyle: { color: '#FFF' },
+                    textStyle: { color: '#FFF' },
+                },
+                vAxis: {
+                    title: "Weight (lbs)",
+                    minValue: 0,
+                    titleTextStyle: { color: '#FFF' },
+                    textStyle: { color: '#FFF' },
+                },
+                backgroundColor: 'transparent',
+                fontName: 'Poppins',
             };
-            var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+            
+            chart = new google.visualization.LineChart(document.getElementById('line_chart'));
             chart.draw(data, options);
         }
+
+        window.onresize = function() {
+            if (chart) {
+                chart.draw(data, options);
+            }
+        };
     </script>
 {% endblock %}
 
@@ -38,7 +69,7 @@
     <!-- Dashboard Sections -->
     <div class="row mt-5">
         <!-- Chart Section -->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-8 mb-4">
             <div class="col-md-12">
                 <div class="card-header text-white">
                     <h5 class="card-title mb-4">Progress</h5>
@@ -52,7 +83,7 @@
         </div>
 
         <!-- Logs Section -->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-4 mb-4">
             <div class="card-header text-white">
                 <h5 class="card-title mb-4">Most Recent Workouts</h5>
             </div>

@@ -9,28 +9,33 @@
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
+        let chart;  // Declare the chart variable globally
+        let data;
+        let options;
+
         function drawChart() {
             const chartData = JSON.parse('{{ chart_data|safe }}');
 
-            var data = new google.visualization.DataTable();
+            data = new google.visualization.DataTable();
             data.addColumn('string', 'X');
             data.addColumn('number', 'Duration (min)');
             data.addRows(chartData);
 
-            var options = {
+            options = {
                 title: "Total Workout Duration Per Day (This Week)",
                 titleTextStyle: {
-                    color: '#FFF',  // Title font color
+                    color: '#FFF',  
+                    fontSize: 18,
                 },
                 animation:{
-                    duration: 100,
+                    duration: 1000,
                     easing: 'out',
                     "startup": true
                 },
                 legend: { position: 'none' },
                 hAxis: { 
                     title: "Date",
-                    titleTextStyle: { color: '#FFF' },
+                    titleTextStyle: { color: '#FFF'},
                     textStyle: { color: '#FFF' },
                 },
                 vAxis: {
@@ -40,11 +45,18 @@
                     textStyle: { color: '#FFF' },
                 },
                 backgroundColor: 'transparent',
+                fontName: 'Poppins',
             };
             
-            var chart = new google.visualization.ColumnChart(document.getElementById('line_chart'));
+            chart = new google.visualization.ColumnChart(document.getElementById('line_chart'));
             chart.draw(data, options);
         }
+
+        window.onresize = function() {
+            if (chart && data && options) {
+                chart.draw(data, options);
+            }
+        };
     </script>
 {% endblock %}
 
