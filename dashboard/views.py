@@ -7,6 +7,7 @@ from django.utils.timezone import now, timedelta
 import json
 from datetime import datetime
 from django.db.models import Count
+from collections import OrderedDict
 
 @login_required
 def view_dashboard(request):
@@ -26,6 +27,13 @@ def view_dashboard(request):
         if log.duration:
             minutes_today += log.duration.total_seconds() / 60.0
 
+    minutes_week = {}
+    for log in logs_week:
+        if log.date not in minutes_week:
+            minutes_week[log.date] = 0
+        if log.duration:
+            minutes_week[log.date] += log.duration.total_seconds() / 60.0
+    minutes_week = OrderedDict(sorted(minutes_week.items()))
     # Calculate the largest increase in a single exercise from the logs in the week
     exercise_progress = {}
     for log in logs_week:
@@ -50,12 +58,11 @@ def view_dashboard(request):
         comments_by_post[post_key].append(comment)
 
     # Chart data for fitness data visualization
-    chart_logs = WorkoutLog.objects.filter(user=request.user, exercise="hip thrusts").order_by('date')
-    six_months_ago = datetime.now() - timedelta(days=6*30)
-    chart_logs = chart_logs.filter(date__gte=six_months_ago)
+    chart_logs = minutes_week.items()
     chart_data = [
-        [log.date.strftime('%Y-%m-%d'), log.weight] for log in chart_logs
+        [date.strftime('%Y-%m-%d'), duration] for date, duration in chart_logs
     ]
+    print(chart_data)
 
     return render(request, 'dashboard/dashboard.html', {
         'first_name': first_name,
