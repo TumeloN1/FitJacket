@@ -9,7 +9,7 @@
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
-        let chart;  // Declare the chart variable globally
+        let chart;
         let data;
         let options;
 
@@ -46,6 +46,7 @@
                 },
                 backgroundColor: 'transparent',
                 fontName: 'Poppins',
+                colors: ['#04c2dc'], // Set the color of the bars
             };
             
             chart = new google.visualization.ColumnChart(document.getElementById('line_chart'));
