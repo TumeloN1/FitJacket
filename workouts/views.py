@@ -92,11 +92,13 @@ def view_workout(request, exercise):
     chart_data = [
         [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
     ]
+    recent_logs = WorkoutLog.objects.filter(user=request.user, exercise=exercise).order_by('-date')[:5]
     return render(request, "workouts/view_workout.html", {
         "logs" : logs,
         "chart_data": json.dumps(chart_data),
         "first_name" : request.user.first_name,
         "exercise": exercise,
+        "recent_logs": recent_logs
     })
 
 @login_required

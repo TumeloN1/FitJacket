@@ -22,7 +22,7 @@
             data.addRows(chartData);
 
             options = {
-                title: "Max Weight in the Past Six Months",
+                title: "Weight over the Past Six Months",
                 titleTextStyle: {
                     color: '#FFF',
                     fontSize: 18,
@@ -64,9 +64,16 @@
 {% block content %}
 
 <div class="container mt-4 fade-in">
-    <h2 class="text-center">{{ exercise }}</h2>
+    <h2 class="text-center">Weight</h2>
     <hr/>
-
+    <div class="row mt-5">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm p-4">
+                <h5 class="card-title mb-3">Weight</h5>
+                <a href="{% url 'dashboard:log_weight' %}" class="btn btn-primary">Log Weight</a>
+            </div>
+        </div>
+    </div>
     <!-- Dashboard Sections -->
     <div class="row mt-5">
         <!-- Chart Section -->
@@ -86,7 +93,7 @@
         <!-- Logs Section -->
         <div class="col-md-4 mb-4">
             <div class="card-header text-white">
-                <h5 class="card-title mb-4">Most Recent Workouts</h5>
+                <h5 class="card-title mb-4">Weight Logs</h5>
             </div>
             <div class="card-body">
                 <ul class="list-group">
@@ -101,46 +108,28 @@
                                     <table class="table table-sm transparent-table">
                                         <thead>
                                             <tr style="background-color: transparent;">
-                                                <th scope="col">Sets</th>
-                                                <th scope="col">Reps</th>
                                                 <th scope="col">Weight (lbs)</th>
+                                                <th scope="col">Notes:</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr style="background-color: transparent;">
-                                                <td>{{ log.sets }}</td>
-                                                <td>{{ log.reps }}</td>
                                                 <td>{{ log.weight }}</td>
+                                                <td>{{ log.notes }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                       <a href="{% url 'dashboard:edit_weight_log' log.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a href="{% url 'dashboard:delete_weight_log' log.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
                                 </div>
                             </div>
                         </div>
                         {% empty %}
-                        <p>No recent workouts logged yet.</p>
+                        <p>No weight logged yet.</p>
                         {% endfor %}
                     </div>
                 </ul>
             </div>
-        </div>
-    </div>
-
-    <!-- Recomendations Section -->
-    <div>
-        <div class="card-header text-white">
-            <h5 class="card-title mb-4">Recommended Plans</h5>
-        </div>
-        <div class="card-body">
-            <ul class="list-group">
-                {% for exercise in recommended_exercises %}
-                <li class="list-group-item">
-                    <strong>{{ exercise.name }}</strong> - {{ exercise.description }}
-                </li>
-                {% empty %}
-                <p class="text-muted">No recommendations yet. <a href="{% url 'workouts:exercise_list' %}">Explore exercises</a>.</p>
-                {% endfor %}
-            </ul>
         </div>
     </div>
 </div>

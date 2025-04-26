@@ -4,6 +4,10 @@ from accounts.documents import Account
 from .documents import Post, Comment, Group, Friendship, FriendRequest
 from mongoengine.queryset.visitor import Q
 from bson import ObjectId
+from .models import Milestones, Badge
+from workouts.models import WorkoutLog
+from dashboard.models import WeightLog
+from goals.models import FitnessGoal
 
 
 @login_required
@@ -123,6 +127,39 @@ def social_hub(request):
         comments = Comment.objects(post=post)
         comments_by_post[str(post.id)] = comments
 
+    # Badge Checking
+    milestones = Milestones.objects.all()
+    active_days = WorkoutLog.objects.filter(user=request.user).values('date').distinct().count()
+    weight_logs = WeightLog.objects.filter(user=request.user).order_by('date')
+    goals = [goal.goal_type for goal in FitnessGoal.objects.filter(user=request.user)]
+    weight_changes = [
+        weight_logs[i].weight - weight_logs[i - 1].weight
+        for i in range(1, len(weight_logs))
+    ]
+    milestones_met = []
+    for milestone in milestones:
+        if milestone.target_category == "active_days" and active_days >= int(milestone.target_metric):
+            milestones_met.append(milestone)
+        if len(weight_changes) > 0:
+            if milestone.target_category == "lose_weight" and 'lose_weight' in goals:
+                if any(change < 0 and abs(change) >= int(milestone.target_metric) for change in weight_changes):
+                    milestones_met.append(milestone)
+            if milestone.target_category == "gain_muscle" and 'gain_muscle' in goals:
+                if any(change > 0 and change >= int(milestone.target_metric) for change in weight_changes):
+                    milestones_met.append(milestone)
+        
+    for milestone in milestones_met:
+        if not Badge.objects.filter(user=request.user, milestone=milestone).exists():
+            Badge.objects.create(
+                user=request.user,
+                name=milestone.name,
+                icon="🫡",
+                milestone=milestone,
+            )
+
+    user_badges = Badge.objects.filter(user=request.user)
+
+
     return render(request, 'social/social_hub.html', {
         'search_results': search_results,
         'incoming_requests': incoming_requests,
@@ -134,6 +171,7 @@ def social_hub(request):
         'request_message': request_message,
         'group_search_results': group_search_results,
         'group_message': group_message,
+        'user_badges': user_badges,
     })
 
 
@@ -207,4 +245,3 @@ def add_comment(request):
             comment = Comment(author=request.user, post=post, content=content)
             comment.save()
     return redirect('social_hub')
-

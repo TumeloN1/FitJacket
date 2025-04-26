@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from goals.models import FitnessGoal
 from workouts.models import WorkoutLog
@@ -8,6 +8,11 @@ import json
 from datetime import datetime
 from django.db.models import Count
 from collections import OrderedDict
+from .models import WeightLog
+from .forms import WeightLogForm
+from django.shortcuts import get_object_or_404
+from django.contrib import messages
+
 
 @login_required
 def view_dashboard(request):
@@ -78,4 +83,59 @@ def view_dashboard(request):
         'posts': posts,  # Pass posts to template
         'comments_by_post': comments_by_post,  # Pass comments grouped by post to template
         'minutes_today': minutes_today,
+    })
+
+@login_required
+def log_weight(request):
+    if request.method == "POST":
+        form = WeightLogForm(request.POST)
+        if form.is_valid():
+            log = form.save(commit=False)
+            log.user = request.user
+            log.save()
+            messages.success(request, "Workout log saved successfully!")
+            return redirect("dashboard:view_weight")
+    else:
+        form = WeightLogForm()
+    return render(request, "dashboard/log_weight.html", {"form": form})
+
+
+@login_required
+def edit_weight_log(request, log_id):
+    log = get_object_or_404(WeightLog, id=log_id, user=request.user)
+    if request.method == "POST":
+        form = WeightLogForm(request.POST, instance=log)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Weight updated successfully!")
+            return redirect("dashboard:view_weight")
+        else:
+            messages.error(request, "Please fix the errors below.")
+    else:
+        form = WeightLogForm(instance=log)
+    return render(request, "dashboard/log_weight.html", {"form": form})
+
+@login_required
+def delete_weight_log(request, log_id):
+    log = get_object_or_404(WeightLog, id=log_id, user=request.user)
+    if request.method == "POST":
+        log.delete()
+        messages.success(request, "Weight log deleted successfully!")
+        return redirect("dashboard:view_weight")
+    return render(request, "dashboard/confirm_delete.html", {"object": log})
+
+@login_required
+def view_weight(request):
+    logs = WeightLog.objects.filter(user=request.user).order_by('date')
+    six_months_ago = datetime.now() - timedelta(days=6*30)
+    logs = logs.filter(date__gte=six_months_ago)
+    chart_data = [
+        [log.date.strftime('%Y-%m-%d'), log.weight] for log in logs
+    ]
+    recent_logs = WeightLog.objects.filter(user=request.user).order_by('-date')[:5]
+    return render(request, "dashboard/view_weight.html", {
+        "logs" : logs,
+        "chart_data": json.dumps(chart_data),
+        "first_name" : request.user.first_name,
+        "recent_logs": recent_logs
     })
