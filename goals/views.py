@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import FitnessGoal
 from .forms import FitnessGoalForm
 from workouts.services.gpt_plan_generator import generate_plan
+from django.http import JsonResponse
 
 
 @login_required
@@ -33,13 +34,15 @@ def goal_home(request):
 @login_required
 def goal_detail(request, goal_id):
     goal = get_object_or_404(FitnessGoal, id=goal_id, user=request.user)
-    raw_plan = generate_plan(request.user, goal=goal)
 
-    plan_html = markdown.markdown(raw_plan)
-    return render(request, "goals/goal_detail.html", {
-        "goal": goal,
-        "plan_html": plan_html,
-    })
+    # Handle AJAX request for generating the plan
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':  # Check if it's an AJAX request
+        raw_plan = generate_plan(request.user, goal=goal)
+        plan_html = markdown.markdown(raw_plan)
+        return JsonResponse({"plan_html": plan_html})
+
+    # Render the normal page if not an AJAX request
+    return render(request, "goals/goal_detail.html", {"goal": goal})
 
 
 @login_required

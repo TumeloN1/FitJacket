@@ -1,59 +1,35 @@
-<!-- social/group_feed.html -->
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
-    <h1>Group Feed: {{ group.name }}</h1>
-    <p>{{ group.description }}</p>
+<h2>{{ group.name }} Feed</h2>
 
-    <!-- Join Group Button -->
-    {% if request.user not in group.members %}
-        <form action="{% url 'join_group' group.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Join Group</button>
-        </form>
-    {% else %}
-        <p>You are a member of this group.</p>
-    {% endif %}
+<!-- Post to Group -->
+<form method="post" action="{% url 'create_group_post' group.id %}">
+    {% csrf_token %}
+    <textarea name="content" placeholder="Share something with the group"></textarea>
+    <button type="submit">Post</button>
+</form>
 
-    <hr>
+{% for post in posts %}
+  <div>
+    <p><strong>{{ post.author.username }}</strong> posted: {{ post.content }}</p>
+    <p>Likes: {{ post.likes|length }}</p>
+    <a href="{% url 'like_post' post.id %}">Like</a>
 
+    <!-- Comments -->
     <div>
-        <h2>Posts in {{ group.name }}</h2>
-        {% for post in posts %}
-            <div class="post">
-                <h3>{{ post.author.username }}</h3>
-                <p>{{ post.content }}</p>
-                <small>Posted on {{ post.created_at }}</small>
-                <div>
-                    <p><strong>{{ post.likes|length }} Likes</strong></p>
-                    <form action="{% url 'like_post' post.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" {% if request.user in post.likes %} disabled {% endif %}>Like</button>
-                    </form>
-                </div>
-
-                <!-- Comments Section -->
-                <div>
-                    <h4>Comments</h4>
-                    {% for post_id, comments in comments_by_post.items %}
-                        {% if post.id|stringformat:"s" == post_id %}
-                            <ul>
-                                {% for comment in comments %}
-                                    <li><strong>{{ comment.author.username }}:</strong> {{ comment.content }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    {% endfor %}
-
-                    <form action="{% url 'group_feed' group.id %}" method="post">
-                        {% csrf_token %}
-                        <textarea name="comment_content" placeholder="Add a comment"></textarea>
-                        <input type="hidden" name="post_id" value="{{ post.id }}">
-                        <button type="submit" name="comment_submit">Post Comment</button>
-                    </form>
-                </div>
-            </div>
-            <hr>
-        {% endfor %}
+      {% for comment in comments_by_post|get_item:post.id|stringformat:"s" %}
+        <p><strong>{{ comment.author.username }}:</strong> {{ comment.content }}</p>
+      {% endfor %}
     </div>
+
+    <!-- Comment Form -->
+    <form method="post" action="{% url 'add_comment' %}">
+        {% csrf_token %}
+        <input type="hidden" name="post_id" value="{{ post.id }}">
+        <input type="text" name="comment_content" placeholder="Add a comment">
+        <button type="submit">Comment</button>
+    </form>
+  </div>
+  <hr>
+{% endfor %}
 {% endblock %}

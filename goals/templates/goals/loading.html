@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card mb-4">
+    <div>Loading...</div>
+  </div>
+
+  <div class="card mb-4">
+    <div>Loading...</div>
+  </div>
+  <script>
+    // Fetch the generated plan via AJAX
+    const goalId = "{{ goal_id }}";  // Pass the goal ID from the backend
+    fetch(`/goals/${goalId}/`, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'  // Indicate it's an AJAX request
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Redirect to the goal detail page with the generated plan
+        document.open();
+        document.write(data.plan_html);
+        document.close();
+    })
+    .catch(error => {
+        console.error('Error fetching the plan:', error);
+    });
+</script>
+</div>
+{% endblock %}
