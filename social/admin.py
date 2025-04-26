@@ -3,7 +3,7 @@ from .models import Milestones, Badge
 
 @admin.register(Milestones)
 class MilestoneAdmin(admin.ModelAdmin):
-    list_display = ("name", "description", "target")
+    list_display = ("name", "description", "target_category", "target_metric")
     search_fields = ("name", "description")
 
 @admin.register(Badge)

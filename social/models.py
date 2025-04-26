@@ -8,9 +8,15 @@ User = get_user_model()
 
 # Milestone condition to award badge
 class Milestones(models.Model):
+    CATEGORIES = [
+        ("lose_weight", "Lose Weight"),
+        ("gain_muscle", "Gain Muscle"),
+        ("active_days", "Active Days"),
+    ]
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
-    target = models.CharField(max_length=20)
+    target_category = models.CharField(max_length=50, choices=CATEGORIES)
+    target_metric = models.CharField(max_length=20)
     def __str__(self):
         return self.name
 
@@ -18,7 +24,7 @@ class Milestones(models.Model):
 class Badge(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    icon = models.ImageField(upload_to="badges/icons", blank=True, null=True)
+    icon = models.CharField(max_length=50)
     date = models.DateField(auto_now_add=True)
     milestone = models.ForeignKey(Milestones, on_delete=models.CASCADE)
     def __str__(self):

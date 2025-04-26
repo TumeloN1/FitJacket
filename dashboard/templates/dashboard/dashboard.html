@@ -196,21 +196,33 @@
         </div>
     </div>
 
-    <!-- Recommendations Section -->
-    <div>
-        <div class="card-header text-white">
-            <h5 class="card-title mb-4">Recommended Plans</h5>
+    <!-- Recommendations and Log Weight Section -->
+    <div class="row mt-5">
+        <!-- Recommendations Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card-header text-white">
+                <h5 class="card-title mb-4">Recommended Plans</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for exercise in recommended_exercises %}
+                    <li class="list-group-item">
+                        <strong>{{ exercise.name }}</strong> - {{ exercise.description }}
+                    </li>
+                    {% empty %}
+                    <p class="text-muted">No recommendations yet. <a href="{% url 'workouts:exercise_list' %}">Explore exercises</a>.</p>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-        <div class="card-body">
-            <ul class="list-group">
-                {% for exercise in recommended_exercises %}
-                <li class="list-group-item">
-                    <strong>{{ exercise.name }}</strong> - {{ exercise.description }}
-                </li>
-                {% empty %}
-                <p class="text-muted">No recommendations yet. <a href="{% url 'workouts:exercise_list' %}">Explore exercises</a>.</p>
-                {% endfor %}
-            </ul>
+
+        <!-- Log Weight Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm p-4">
+                <h5 class="card-title mb-3">Weight</h5>
+                <p>View and update your weight over time</p>
+                <a href="{% url 'dashboard:view_weight' %}" class="btn btn-primary">Log Weight</a>
+            </div>
         </div>
     </div>
 
