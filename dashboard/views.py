@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 from django.db.models import Count
 from collections import OrderedDict
-from .models import WeightLog
+from .models import WeightLog, Badge, Milestones
 from .forms import WeightLogForm
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
@@ -69,6 +69,38 @@ def view_dashboard(request):
     ]
     print(chart_data)
 
+    # Badge Checking
+    milestones = Milestones.objects.all()
+    active_days = WorkoutLog.objects.filter(user=request.user).values('date').distinct().count()
+    weight_logs = WeightLog.objects.filter(user=request.user).order_by('date')
+    goals = [goal.goal_type for goal in FitnessGoal.objects.filter(user=request.user)]
+    weight_changes = [
+        weight_logs[i].weight - weight_logs[i - 1].weight
+        for i in range(1, len(weight_logs))
+    ]
+    milestones_met = []
+    for milestone in milestones:
+        if milestone.target_category == "active_days" and active_days >= int(milestone.target_metric):
+            milestones_met.append(milestone)
+        if len(weight_changes) > 0:
+            if milestone.target_category == "lose_weight" and 'lose_weight' in goals:
+                if any(change < 0 and abs(change) >= int(milestone.target_metric) for change in weight_changes):
+                    milestones_met.append(milestone)
+            if milestone.target_category == "gain_muscle" and 'gain_muscle' in goals:
+                if any(change > 0 and change >= int(milestone.target_metric) for change in weight_changes):
+                    milestones_met.append(milestone)
+        
+    for milestone in milestones_met:
+        if not Badge.objects.filter(user=request.user, milestone=milestone).exists():
+            Badge.objects.create(
+                user=request.user,
+                name=milestone.name,
+                icon="🫡",
+                milestone=milestone,
+            )
+
+    user_badges = Badge.objects.filter(user=request.user)
+
     return render(request, 'dashboard/dashboard.html', {
         'first_name': first_name,
         'goals': goals,
@@ -83,6 +115,7 @@ def view_dashboard(request):
         'posts': posts,  # Pass posts to template
         'comments_by_post': comments_by_post,  # Pass comments grouped by post to template
         'minutes_today': minutes_today,
+        'user_badges': user_badges,
     })
 
 @login_required
